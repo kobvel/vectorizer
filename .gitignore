@@ -29,3 +29,6 @@ node_modules
 
 # Bower ignore
 vendors
+
+public/css
+public/js
