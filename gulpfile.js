@@ -20,7 +20,7 @@ gulp.task('less', function() {
 });
 
 gulp.task('js', function() {
-  return gulp.src('./src/js/**/*.js')
+  return gulp.src(['./vendors/jquery/dist/jquery.js', './src/js/**/*.js'])
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
