@@ -8,6 +8,15 @@ var uglify = require('gulp-uglify');
 var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 
+
+var vendors = {
+  css: [],
+  js: [
+    './vendors/jquery/dist/jquery.js',
+    './vendors/konva/konva.js'
+  ]
+}
+
 gulp.task('less', function() {
   return gulp.src('./src/less/app.less')
     .pipe(plumber())
@@ -19,8 +28,17 @@ gulp.task('less', function() {
     .pipe(gulp.dest('./public/css'));
 });
 
+gulp.task('vendors', function() {
+  return gulp.src(vendors.js)
+    .pipe(plumber())
+    .pipe(sourcemaps.init())
+    .pipe(concat('vendors.js'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./public/js'));
+});
+
 gulp.task('js', function() {
-  return gulp.src(['./vendors/jquery/dist/jquery.js', './src/js/**/*.js'])
+  return gulp.src('./src/js/**/*.js')
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
@@ -37,9 +55,13 @@ gulp.task('watch', ['build'], function() {
   watch('./src/js/**/*.js', function() {
     gulp.start('js');
   });
+
+  watch(vendors.js, function() {
+    gulp.start('vendors');
+  });
 });
 
-gulp.task('build', ['less', 'js']);
+gulp.task('build', ['less', 'vendors', 'js']);
 
 gulp.task('default', ['build']);
 

@@ -7,6 +7,7 @@ var methodOverride = require('method-override');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var async = require('async');
+var sizeOf = require('image-size');
 var exec = require('child_process').exec;
 var serveStatic = require('serve-static')
 
@@ -21,31 +22,40 @@ app.get('/', function(req, res) {
 app.post('/api/photo', multipartMiddleware, function(req, res) {
 
   console.log(JSON.stringify(req.files));
-  var serverPath = './public/uploads/' + req.files.image.name.replace(/^(.+)\./, (new Date).getTime() + '.');
 
-  console.log('serverPath', serverPath);
+  var image = {};
+
+  image.dir = '/uploads/';
+
+  var name = req.files.image.name;
+  var lastIndex = name.lastIndexOf('.');
+
+  image.ext = name.substr(lastIndex, name.length);
+  image.name = (new Date).getTime();
+  image.publicPath = './public' + image.dir;
+  image.srcPath = image.publicPath + image.name + image.ext;
+  image.path = image.publicPath + image.name;
+
+  console.log('image', image);
 
   async.waterfall([
 
     function moveFile(callback) {
-      var path = serverPath;
-
       fs.rename(
         req.files.image.path,
-        path,
+        image.srcPath,
         function(error) {
           if (error) {
             callback(error);
           };
 
-          callback(null, path);
+          callback(null);
         });
     },
-    function convertImg(path, callback) {
-      var img = path;
-      var pbm = path.replace(/\.[A-z]+$/, '.pbm');
+    function convertImg(callback) {
+      var bmp = image.path + '.bmp';
 
-      var child = exec('convert ' + img + ' ' + pbm,
+      var child = exec('convert ' + image.srcPath + ' ' + bmp,
         function(error, stdout, stderr) {
           console.log('stdout: ' + stdout);
           console.log('stderr: ' + stderr);
@@ -53,13 +63,14 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
             callback(error);
           }
 
-          callback(null, pbm);
+          callback(null);
         });
     },
-    function processImg(pbm, callback) {
-      var svg = pbm.replace(/\.[A-z]+$/, '.svg');
+    function processImg(callback) {
+      var bmp = image.path + '.bmp';
+      var svg = image.path + '.svg';
 
-      var child = exec('potrace ' + pbm + ' -o ' + svg,
+      var child = exec('potrace --svg ' + bmp + ' -o ' + svg,
         function(error, stdout, stderr) {
           console.log('stdout: ' + stdout);
           console.log('stderr: ' + stderr);
@@ -67,10 +78,24 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
             callback(error);
           }
 
-          callback(null, svg);
+          callback(null);
+        });
+    },
+    function resizeImg(callback) {
+      var resize = image.path + '_resized' + image.ext;
+
+      var child = exec('convert ' + image.srcPath + ' -resize 1024x700 ' + resize,
+        function(error, stdout, stderr) {
+          console.log('stdout: ' + stdout);
+          console.log('stderr: ' + stderr);
+          if (error) {
+            callback(error);
+          }
+
+          callback(null);
         });
     }
-  ], function(err, svg) {
+  ], function(err) {
     if (err) {
       console.log(err)
       res.send({
@@ -82,15 +107,11 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
     console.log('done')
 
     res.send({
-      image: serverPath.substr(8),
-      svg: svg.substr(8)
+      image: image.dir + image.name + '_resized' + image.ext,
+      svg: image.dir + image.name + '.svg'
     });
   });
 });
-
-
-
-
 
 
 /*Run the server.*/
