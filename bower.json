@@ -13,6 +13,8 @@
   ],
   "dependencies": {
     "bootstrap": "~3.3.2",
-    "konva": "~0.9.0"
+    "konva": "~0.9.0",
+    "seiyria-bootstrap-slider": "~4.5.1",
+    "color-thief": "*"
   }
 }

@@ -13,7 +13,9 @@ var vendors = {
   css: [],
   js: [
     './vendors/jquery/dist/jquery.js',
-    './vendors/konva/konva.js'
+    './vendors/konva/konva.js',
+    './vendors/seiyria-bootstrap-slider/js/bootstrap-slider.js',
+    './vendors/color-thief/src/color-thief.js'
   ]
 }
 
@@ -42,7 +44,7 @@ gulp.task('js', function() {
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./public/js'));
 });

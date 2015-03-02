@@ -70,7 +70,7 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
       var bmp = image.path + '.bmp';
       var svg = image.path + '.svg';
 
-      var child = exec('potrace --svg ' + bmp + ' -o ' + svg,
+      var child = exec('potrace --svg -a 5 ' + bmp + ' -o ' + svg,
         function(error, stdout, stderr) {
           console.log('stdout: ' + stdout);
           console.log('stderr: ' + stderr);
