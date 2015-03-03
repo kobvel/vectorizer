@@ -3,21 +3,12 @@
   var fileInput = $('#file-upload');
   var processWithParams = $('#process-btn');
 
-
-  fileInput.on('change', function(event) {
-    if (!this.files[0]) {
-      return;
-    };
-
-    var fd = new FormData;
-
-    fd.append('image', this.files[0]);
-
+  var sendData = function(url, data) {
     $.ajax({
-      url: '/api/photo',
+      url: url,
       type: 'POST',
       dataType: 'json',
-      data: fd,
+      data: data,
       processData: false,
       contentType: false,
       success: function(data) {
@@ -68,16 +59,33 @@
       }
     })
 
+  }
+
+  fileInput.on('change', function(event) {
+    if (!this.files[0]) {
+      return;
+    };
+
+    var fd = new FormData;
+
+    fd.append('image', this.files[0]);
+    sendData('/api/photo', fd);
+
+
   })
   processWithParams.on('click', function(event) {
 
-    var params = $('#potraceParams').serialize();
-    var imageObj = image.getImage(); //getting Image from Konva.layer
+    var params = JSON.stringify($('#potraceParams').serializeArray());
+    var imageObj = imageLayer.getCanvas().toDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
+
+
     console.log(params);
-
+    console.log(canvasImg);
+    getImageColors(image);
     var fd = new FormData();
-    fd.append('file', imageObj);
-
+    fd.append('image', imageObj);
+    fd.append('params', params);
+    sendData('/api/photo', fd);
 
 
   })
@@ -119,15 +127,15 @@
   }
   $(document).keypress(trackVisibilityKeypress);
 
-  /*function returnImg() {
-    return image;
-  }*/
-  /*  function getImageColors(image) {
+
+
+
+  function getImageColors(image) {
     var colorThief = new ColorThief();
     var domainColor = colorThief.getColor(image);
     var palette = paletteArray = createPalette(image, 10);
     console.log(domainColor, palette);
 
-  }*/
+  }
 
 })();
