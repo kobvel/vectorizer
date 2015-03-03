@@ -36,26 +36,27 @@ $('#fill-color').click(function(e) {
   pickColor(flcolor, fieldfillcolor);
 });
 
+
+
+
+
+
 function pickColor(preview, fieldinput) {
   if ($('#container > div > canvas:nth-child(1)').length > 0) {
 
     canvas = $('#container > div > canvas:nth-child(1)');
     ctx = canvas[0].getContext("2d");
 
-
-
     canvas.mousemove(function(e) {
 
       var canvasOffset = $(canvas).offset();
       var canvasX = Math.floor(e.pageX - canvasOffset.left);
       var canvasY = Math.floor(e.pageY - canvasOffset.top);
-
       var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
       var pixel = imageData.data;
 
       var pixelColor = "rgba(" + pixel[0] + ", " + pixel[1] + ", " + pixel[2] + ", " + pixel[3] + ")";
       preview.css('backgroundColor', pixelColor);
-
 
     });
 
@@ -63,7 +64,6 @@ function pickColor(preview, fieldinput) {
       var canvasOffset = $(canvas).offset();
       var canvasX = Math.floor(e.pageX - canvasOffset.left);
       var canvasY = Math.floor(e.pageY - canvasOffset.top);
-
       var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
       var pixel = imageData.data;
 
@@ -72,11 +72,6 @@ function pickColor(preview, fieldinput) {
       canvas.unbind("click");
       canvas.unbind("mousemove");
     });
-
-
-
-
-
   }
 
 

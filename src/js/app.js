@@ -87,10 +87,7 @@
     fd.append('params', params);
     sendData('/api/photo', fd);
 
-
   })
-
-
 
   var stage = new Konva.Stage({
     container: 'container',
@@ -127,15 +124,25 @@
   }
   $(document).keypress(trackVisibilityKeypress);
 
+  // Color thief library getting color palette from input image (Konva.image)
+  $('#get-palette').click(function(e) {
+    getColorsFromImage();
+
+  })
+
+  function getColorsFromImage() {
+    if ($('#container > div > canvas:nth-child(1)').length > 0) {
+      var imageObj = image.getImage();
+      var colorThief = new ColorThief();
+      var color = colorThief.getColor(imageObj);
+      var palette = colorThief.getPalette(imageObj);
+      console.log(color, palette);
+    }
+  };
 
 
 
-  function getImageColors(image) {
-    var colorThief = new ColorThief();
-    var domainColor = colorThief.getColor(image);
-    var palette = paletteArray = createPalette(image, 10);
-    console.log(domainColor, palette);
 
-  }
+
 
 })();
