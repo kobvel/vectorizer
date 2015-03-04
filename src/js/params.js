@@ -39,10 +39,6 @@ $('#fill-color').click(function(e) {
 });
 
 
-
-
-
-
 function pickColor(preview, fieldinput) {
   if ($('#container > div > canvas:nth-child(1)').length > 0) {
 

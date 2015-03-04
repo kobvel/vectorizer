@@ -174,6 +174,7 @@
     $.each($('.swatch'), function(i, elem) {
       var a = rgbToHex(palette[i]);
       $(elem).css('background-color', a);
+      $(elem).text(a);
     })
 
   });
