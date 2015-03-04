@@ -23,6 +23,9 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
 
   console.log(JSON.stringify(req.files));
 
+  //req.imageData ()
+  //fs.write(/uploads/)
+
   var image = {};
 
   image.dir = '/uploads/';
@@ -41,6 +44,7 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
   async.waterfall([
 
     function moveFile(callback) {
+      //write
       fs.rename(
         req.files.image.path,
         image.srcPath,

@@ -125,48 +125,31 @@
   $(document).keypress(trackVisibilityKeypress);
 
   // Color thief library getting color palette from input image (Konva.image)
-  $('#get-palette').click(function(e) {
-    getColorsFromImage();
+  $('#get-palette').click(function() {
 
-  })
-
-  function getColorsFromImage() {
-    if ($('#container > div > canvas:nth-child(1)').length > 0) {
-
-
-
-      var imageObj = image.getImage();
-      var colorThief = new ColorThief();
-      var color = colorThief.getColor(imageObj);
-      var palette = colorThief.getPalette(imageObj);
-      var hex_colors = Array;
-      //console.log(color, palette);
-      function componentToHex(c) {
-        var hex = c.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
-      }
-
-      function rgbToHex(arr) {
-        var r = arr[0];;
-        var g = arr[1];;
-        var b = arr[2];
-        return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-      }
-
-      for (var i = 0; i < palette.length; i++) {
-        hex_colors.push(rgbToHex(palette[i]));
-      };
-      console.log(hex_colros);
-
-
-
-
+    var imageObj = image.getImage();
+    var colorThief = new ColorThief();
+    var color = colorThief.getColor(imageObj);
+    var palette = colorThief.getPalette(imageObj);
+    //console.log(color, palette);
+    function componentToHex(c) {
+      var hex = c.toString(16);
+      return hex.length == 1 ? "0" + hex : hex;
     }
-  };
+    console.log(palette);
 
+    function rgbToHex(arr) {
+      var r = arr[0];;
+      var g = arr[1];;
+      var b = arr[2];
+      return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
+    $.each($('.swatch'), function(i, elem) {
+      var a = rgbToHex(palette[i]);
+      $(elem).css('background-color', a);
+    })
 
-
-
+  });
 
 
 })();

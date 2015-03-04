@@ -13,6 +13,7 @@ var vendors = {
   css: [],
   js: [
     './vendors/jquery/dist/jquery.js',
+    './vendors/bootstrap/dist/js/bootstrap.js',
     './vendors/konva/konva.js',
     './vendors/seiyria-bootstrap-slider/js/bootstrap-slider.js',
     './vendors/color-thief/src/color-thief.js'
