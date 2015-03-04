@@ -20,6 +20,7 @@ sliderOpptolerance.on("slide", function(slideEvt) {
 });
 
 
+
 $('#selection')
   .change(function() {
     var str = "";

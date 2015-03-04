@@ -3,6 +3,7 @@
   var fileInput = $('#file-upload');
   var processWithParams = $('#process-btn');
 
+
   var sendData = function(url, data) {
     $.ajax({
       url: url,
@@ -123,6 +124,48 @@
     }
   }
   $(document).keypress(trackVisibilityKeypress);
+
+  $('#layoytsLayers').click(chooseLayerLayout);
+
+
+  function chooseLayerLayout(e) {
+
+    var imgSelectorBtn = $('#imageLayerBtn');
+    var svgSelectorBtn = $('#svgLayerBtn');
+    var dualSelectorBtn = $('#dualLayerBtn');
+    console.log($(imgSelectorBtn).is(':checked'), $(svgSelectorBtn).is(':checked'), $(dualLayerBtn).is(':checked'));
+    if ($(dualSelectorBtn).is(':checked') === true) {
+      svgLayer.visible(true);
+      imageLayer.visible(true);
+      $(document).keypress(trackVisibilityKeypress);
+
+    } else {
+      if ($(imgSelectorBtn).is(':checked') === true) {
+        svgLayer.visible(false);
+        imageLayer.visible(true);
+        $(document).unbind('keyup', trackVisibilityKeyup);
+        $(document).unbind('keypress', trackVisibilityKeypress);
+      } else {
+        svgLayer.visible(true);
+        imageLayer.visible(false);
+        $(document).unbind('keyup', trackVisibilityKeyup);
+        $(document).unbind('keypress', trackVisibilityKeypress);
+      };
+
+
+    }
+
+
+
+
+
+
+
+
+
+  }
+
+
 
   // Color thief library getting color palette from input image (Konva.image)
   $('#get-palette').click(function() {
