@@ -19,6 +19,7 @@ sliderOpptolerance.on("slide", function(slideEvt) {
   $("#opptoleranceSliderVal").val(slideEvt.value);
 });
 
+
 $('#selection')
   .change(function() {
     var str = "";

@@ -80,8 +80,8 @@
 
 
     console.log(params);
-    console.log(canvasImg);
-    getImageColors(image);
+    //console.log(canvasImg);
+    //getImageColors(image);
     var fd = new FormData();
     fd.append('image', imageObj);
     fd.append('params', params);
@@ -132,11 +132,35 @@
 
   function getColorsFromImage() {
     if ($('#container > div > canvas:nth-child(1)').length > 0) {
+
+
+
       var imageObj = image.getImage();
       var colorThief = new ColorThief();
       var color = colorThief.getColor(imageObj);
       var palette = colorThief.getPalette(imageObj);
-      console.log(color, palette);
+      var hex_colors = Array;
+      //console.log(color, palette);
+      function componentToHex(c) {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+      }
+
+      function rgbToHex(arr) {
+        var r = arr[0];;
+        var g = arr[1];;
+        var b = arr[2];
+        return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+      }
+
+      for (var i = 0; i < palette.length; i++) {
+        hex_colors.push(rgbToHex(palette[i]));
+      };
+      console.log(hex_colros);
+
+
+
+
     }
   };
 
