@@ -125,46 +125,30 @@
   }
   $(document).keypress(trackVisibilityKeypress);
 
-  $('#layoytsLayers').click(chooseLayerLayout);
+  $('#dualLayerBtn').click(chooseDoubleLayer);
+  $('#imageLayerBtn').click(chooseImageLayout);
+  $('#svgLayerBtn').click(chooseSvgLayout);
 
 
-  function chooseLayerLayout(e) {
-
-    var imgSelectorBtn = $('#imageLayerBtn');
-    var svgSelectorBtn = $('#svgLayerBtn');
-    var dualSelectorBtn = $('#dualLayerBtn');
-    console.log($(imgSelectorBtn).is(':checked'), $(svgSelectorBtn).is(':checked'), $(dualLayerBtn).is(':checked'));
-    if ($(dualSelectorBtn).is(':checked') === true) {
-      svgLayer.visible(true);
-      imageLayer.visible(true);
-      $(document).keypress(trackVisibilityKeypress);
-
-    } else {
-      if ($(imgSelectorBtn).is(':checked') === true) {
-        svgLayer.visible(false);
-        imageLayer.visible(true);
-        $(document).unbind('keyup', trackVisibilityKeyup);
-        $(document).unbind('keypress', trackVisibilityKeypress);
-      } else {
-        svgLayer.visible(true);
-        imageLayer.visible(false);
-        $(document).unbind('keyup', trackVisibilityKeyup);
-        $(document).unbind('keypress', trackVisibilityKeypress);
-      };
-
-
-    }
-
-
-
-
-
-
-
-
-
+  function chooseDoubleLayer(e) {
+    svgLayer.visible(true);
+    imageLayer.visible(true);
+    $(document).keypress(trackVisibilityKeypress);
   }
 
+  function chooseImageLayout(e) {
+    svgLayer.visible(false);
+    imageLayer.visible(true);
+    $(document).unbind('keyup', trackVisibilityKeyup);
+    $(document).unbind('keypress', trackVisibilityKeypress);
+  }
+
+  function chooseSvgLayout(e) {
+    svgLayer.visible(true);
+    imageLayer.visible(false);
+    $(document).unbind('keyup', trackVisibilityKeyup);
+    $(document).unbind('keypress', trackVisibilityKeypress);
+  }
 
 
   // Color thief library getting color palette from input image (Konva.image)
