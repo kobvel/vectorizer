@@ -67,21 +67,41 @@
       return;
     };
 
-    var fd = new FormData;
+    var fr = new FileReader();
 
-    fd.append('image', this.files[0]);
-    sendData('/api/photo', fd);
+    var imageData;
+
+    fr.onload = function(e) {
+
+      imageData = e.target.result;
+
+      var fd = new FormData;
+
+
+
+      //fd.append('image', this.files[0]);
+      fd.append('imageData', imageData);
+      sendData('/api/photo', fd);
+
+    };
+
+    fr.readAsDataURL(this.files[0]);
+
+
+
+
+
 
 
   })
+
   processWithParams.on('click', function(event) {
 
     var params = JSON.stringify($('#potraceParams').serializeArray());
     var imageObj = imageLayer.getCanvas().toDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
-
-
+    console.log(typeof(imageObj));
     console.log(params);
-    //console.log(canvasImg);
+    //console.log(imageObj);
     //getImageColors(image);
     var fd = new FormData();
     fd.append('image', imageObj);
@@ -89,6 +109,11 @@
     sendData('/api/photo', fd);
 
   })
+
+
+
+
+
 
   var stage = new Konva.Stage({
     container: 'container',
