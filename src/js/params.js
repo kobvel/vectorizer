@@ -1,6 +1,6 @@
 var ctx, canvas;
-var bgcolor = $('#preview > li:nth-child(1) > div');
-var flcolor = $('#preview > li:nth-child(2) > div');
+var bgcolor = $('#color-preview-bg');
+var flcolor = $('#color-preview-fill');
 var fieldbgcolor = $('#color-code-bg');
 var fieldfillcolor = $('#color-code-fill');
 
