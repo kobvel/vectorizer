@@ -10,7 +10,7 @@ var async = require('async');
 var sizeOf = require('image-size');
 var exec = require('child_process').exec;
 var serveStatic = require('serve-static');
-var bodyParser = require('body-parser');
+
 
 
 app.use(serveStatic('public', {
@@ -24,19 +24,17 @@ app.get('/', function(req, res) {
 app.post('/api/photo', multipartMiddleware, function(req, res) {
 
   var base64Data = req.body.imageData;
+  var params = req.body.params;
+  console.log(params);
 
   var match = base64Data.match(/data:image\/(.+);base64,(.+)/);
-  // console.log(req.imageData);
 
-  //req.imageData ()
-  //fs.write(/uploads/)
 
+  //console.log(params);
   var image = {};
 
   image.dir = '/uploads/';
 
-  //var name = req.files.image.name;
-  //var lastIndex = name.lastIndexOf('.');
 
   image.ext = "." + (match[1] == 'jpeg' ? 'jpg' : match[1]);
   image.name = (new Date).getTime();
@@ -45,12 +43,10 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
   image.path = image.publicPath + image.name;
 
 
-  //console.log(image.srcPath);
-
   async.waterfall([
 
     function moveFile(callback) {
-      //callback(match[2].substr(0, 10));
+
 
       fs.writeFile(
         image.srcPath,
@@ -63,20 +59,6 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
           callback(null);
         });
 
-
-
-
-      /*
-      fs.rename(
-        req.files.image.path,
-        image.srcPath,
-        function(error) {
-          if (error) {
-            callback(error);
-          };
-
-          callback(null);
-        });*/
     },
     function convertImg(callback) {
       var bmp = image.path + '.bmp';

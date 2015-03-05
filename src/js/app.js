@@ -68,18 +68,13 @@
     };
 
     var fr = new FileReader();
-
     var imageData;
 
     fr.onload = function(e) {
 
       imageData = e.target.result;
-
       var fd = new FormData;
 
-
-
-      //fd.append('image', this.files[0]);
       fd.append('imageData', imageData);
       sendData('/api/photo', fd);
 
@@ -87,40 +82,24 @@
 
     fr.readAsDataURL(this.files[0]);
 
-
-
-
-
-
-
   })
 
   processWithParams.on('click', function(event) {
 
     var params = JSON.stringify($('#potraceParams').serializeArray());
-    var imageObj = imageLayer.getCanvas().toDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
-    console.log(typeof(imageObj));
-    console.log(params);
-    //console.log(imageObj);
-    //getImageColors(image);
+    var imageData = imageLayer.getCanvas().toDataURL();
     var fd = new FormData();
-    fd.append('image', imageObj);
+
+    fd.append('imageData', imageData);
     fd.append('params', params);
     sendData('/api/photo', fd);
-
   })
-
-
-
-
-
 
   var stage = new Konva.Stage({
     container: 'container',
     width: 0,
     height: 0
   });
-
 
   function trackVisibilityKeypress(e) {
     var KeyID = (window.event) ? event.keyCode : e.keyCode;
@@ -183,7 +162,7 @@
     var colorThief = new ColorThief();
     var color = colorThief.getColor(imageObj);
     var palette = colorThief.getPalette(imageObj);
-    //console.log(color, palette);
+
     function componentToHex(c) {
       var hex = c.toString(16);
       return hex.length == 1 ? "0" + hex : hex;
