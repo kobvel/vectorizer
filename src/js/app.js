@@ -37,7 +37,7 @@
 
           imageLayer.add(image);
           imageLayer.draw();
-
+          imageLayer.visible(false);
           svgObj.onload = function() {
             svg = new Konva.Image({
               x: 0,
@@ -87,6 +87,7 @@
   processWithParams.on('click', function(event) {
 
     var params = JSON.stringify($('#potraceParams').serializeArray());
+
     var imageData = imageLayer.getCanvas().toDataURL();
     var fd = new FormData();
 

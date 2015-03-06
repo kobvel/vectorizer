@@ -14,9 +14,9 @@ sliderAlphamax.on("slide", function(slideEvt) {
   $("#alphamaxSliderVal").val(slideEvt.value);
 });
 
-var sliderOpptolerance = new Slider("#opptolerance");
-sliderOpptolerance.on("slide", function(slideEvt) {
-  $("#opptoleranceSliderVal").val(slideEvt.value);
+var sliderOpttolerance = new Slider("#opttolerance");
+sliderOpttolerance.on("slide", function(slideEvt) {
+  $("#opttoleranceSliderVal").val(slideEvt.value);
 });
 
 
