@@ -28,15 +28,7 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
   var paramsData = req.body.params;
 
   var paramsTypes = ['turdsize', 'alphamax', 'opttolerance', 'turnpolicy', 'color', 'fillcolor'];
-
-
-
   var jsonparam = paramsData ? JSON.parse("{\"params\": " + paramsData + "}") : {};
-
-
-
-
-
   var match = base64Data.match(/data:image\/(.+);base64,(.+)/);
   var image = {};
 
@@ -81,7 +73,7 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
       function processImg(callback) {
         var bmp = image.path + '.bmp';
         var svg = image.path + '.svg';
-        var options = ["--svg", "-a", "5"];
+        var options = ["--svg"];
 
         if (jsonparam.params) {
           jsonparam.params.forEach(function(i) {
@@ -93,11 +85,11 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
             }
           });
         };
-        console.log(options = options.concat([bmp, '-o', svg]));
+
         options = options.concat([bmp, '-o', svg]);
 
-
         var potrace = spawn('potrace', options);
+        console.log(options);
         potrace.on('error', function(error) {
           callback(error);
         });
