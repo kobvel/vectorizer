@@ -21,6 +21,7 @@
     "angular-bootstrap-slider": "~0.1.1"
   },
   "resolutions": {
-    "seiyria-bootstrap-slider": "~4.5.1"
+    "seiyria-bootstrap-slider": "~4.5.1",
+    "angular": ">=1 <1.3.0"
   }
 }

@@ -20,6 +20,16 @@ var vendors = {
   ]
 }
 
+// var src = {
+//   css: [],
+//   js: [
+//     './src/js/app.js',
+//     './src/js/controllers/*.js'
+//     './src/js/directives/*.js'
+//     './src/js/services/*.js'
+//   ]
+// }
+
 gulp.task('less', function() {
   return gulp.src('./src/less/app.less')
     .pipe(plumber())
@@ -41,7 +51,7 @@ gulp.task('vendors', function() {
 });
 
 gulp.task('js', function() {
-  return gulp.src(['./src/js/app.js', './src/js/[A-z]+/*.js'])
+  return gulp.src(['./src/js/app.js', './src/js/{controllers,directives,services}/*.js'])
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))

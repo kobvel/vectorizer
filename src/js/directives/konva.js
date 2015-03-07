@@ -1,7 +1,7 @@
 (function() {
   angular
     .module('Vectorizer.directives')
-    .service('konva', konva);
+    .directive('konva', konva);
 
   function konva() {
     return {
@@ -10,11 +10,13 @@
         stage: '=',
       },
       link: function(scope, element, attrs) {
-        scope.stage = new Konva.Stage({
-          container: element,
-          width: 0,
-          height: 0
+        scope.stage.stage = new Konva.Stage({
+          container: element[0],
+          width: 110,
+          height: 110
         });
+
+        console.log(scope.stage)
       }
     };
   }

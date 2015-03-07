@@ -9,6 +9,11 @@ angular
     'Vectorizer.services',
     'ui.bootstrap',
     'ui.bootstrap-slider'
+  ])
+  .run(['$rootScope',
+    function($rootScope) {
+      $rootScope.loading = false;
+    }
   ]);
 
 // (function() {
