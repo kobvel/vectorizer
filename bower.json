@@ -15,6 +15,12 @@
     "bootstrap": "~3.3.2",
     "konva": "~0.9.0",
     "seiyria-bootstrap-slider": "~4.5.1",
-    "color-thief": "*"
+    "color-thief": "*",
+    "angular": "~1.3.14",
+    "angular-bootstrap": "~0.12.1",
+    "angular-bootstrap-slider": "~0.1.1"
+  },
+  "resolutions": {
+    "seiyria-bootstrap-slider": "~4.5.1"
   }
 }
