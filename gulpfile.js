@@ -15,20 +15,11 @@ var vendors = {
     './vendors/angular/angular.js',
     './vendors/angular-bootstrap/ui-bootstrap-tpls.js',
     './vendors/konva/konva.js',
+    './vendors/seiyria-bootstrap-slider/js/bootstrap-slider.js',
     './vendors/angular-bootstrap-slider/slider.js',
     './vendors/color-thief/src/color-thief.js'
   ]
 }
-
-// var src = {
-//   css: [],
-//   js: [
-//     './src/js/app.js',
-//     './src/js/controllers/*.js'
-//     './src/js/directives/*.js'
-//     './src/js/services/*.js'
-//   ]
-// }
 
 gulp.task('less', function() {
   return gulp.src('./src/less/app.less')

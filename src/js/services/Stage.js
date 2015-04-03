@@ -3,7 +3,6 @@
     .module('Vectorizer.services')
     .service('Stage', Stage);
 
-  //Uploader.$inject = ['$http', '$q'];
 
   function Stage() {
     return {
@@ -14,13 +13,14 @@
     };
 
     function loadData(data) {
+
+      this.imageLayer = new Konva.Layer();
+      this.svgLayer = new Konva.Layer();
       var stage = this.stage;
       var imageLayer = this.imageLayer;
       var svgLayer = this.svgLayer;
       stage.destroyChildren();
 
-      imageLayer = new Konva.Layer();
-      svgLayer = new Konva.Layer();
 
       stage.add(imageLayer);
       stage.add(svgLayer);

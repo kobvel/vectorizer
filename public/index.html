@@ -27,78 +27,55 @@
 		<div class="row-fluid ">
 			<div class="col-md-8">
 
-				<input type="file" ng-model="app.file" file-input file-changed="app.fileChanged()">
-
-				<konva stage="app.stage"></konva>
+				<input type="file" ng-model="app.file" file-input file-changed="app.dataChanged()">
+				<konva stage="app.stage" color-picker></konva>
 				<div id="container"></div>
 			</div>
 
 			<div class="col-md-4">
 				<form id="potraceParams">
 
-
 					<div class="row">
 						<div class="col-md-6">
 
-							<div class="form-group">
-								<input id="turdsize" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="0.1" data-slider-value="2">
-								<input id="turdsizeSliderVal" type="text" value="2" size="3" name="turdsize" class="form-control"/>
-							</div>	
-							<div class="form-group">
-								<input id="alphamax" type="text" data-slider-min="0.01" data-slider-max="100" data-slider-step="0.1" data-slider-value="1"t>
-								<input id="alphamaxSliderVal" type="text" value="1" size="3" name="alphamax" class="form-control"/>
-							</div>
-							<div class="form-group">
-								<input id="opttolerance" type="text" data-slider-min="0.01" data-slider-max="2" data-slider-step="0.01" data-slider-value="0.2">
-								<input id="opttoleranceSliderVal" type="text" value="2" size="3" name="opttolerance" class="form-control"/>					
-							</div>
-
-							<div class="form-group">
-								<select class="form-control" id="selection">
-									<option value="black">black</option>
-									<option value="white">white</option>
-									<option value="right">right</option>
-									<option value="left">left</option>
-									<option value="minority">minority</option>
-									<option value="majority">majority</option>
-									<option value="random">random</option>
-								</select>
-
-								<input class="form-control disabled" name ="turnpolicy" id="disabledInput" type="text" placeholder="Disabled input here..." readonly="readonly">
-							</div>
-
-
-
-							<div class="btn-group" data-toggle="buttons" id="layoytsLayers">
-								<label class="btn btn-primary active"  id="svgLayerBtn">
-									<input type="radio" name="options" autocomplete="off" >Svg
-								</label>
-								<label class="btn btn-primary" id="imageLayerBtn">
-									<input type="radio" name="options"  autocomplete="off" > image
-								</label>
-								<label class="btn btn-primary" id="dualLayerBtn">
-									<input type="radio" name="options"  autocomplete="off" > SVG+Image
-								</label>
-							</div>
 							
+							<div class="form-group">
+							<input type="number" ng-model="app.input.turdsize" min="0" max="100" step="0.1">
+							</div>
 
+							<div class="form-group">
+								<input type="number" ng-model="app.input.alphamax" min="0.01" max="100" step="0.01">
+							</div>
+							<div class="form-group">
+							<input type="number" ng-model="app.input.opttolerance" min="0.01" max="100" step="0.01">
+													
+							</div>
 
-							<button type="button" id="process-btn" class="btn btn-success">Success</button>
+							<div class="form-group">
+							<select class="form-control" ng-options="item for item in app.turnpolicy" ng-model="app.input.turnpolicy">
+							</select>
+							</div>
+
+							<div class="btn-group">
+        				<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'" uncheckable>SVG</label>
+        				<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'" uncheckable>IMG</label>
+       					<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'ALL'" uncheckable>ALL</label>
+    					</div>
+							
+							<button type="button" ng-click="app.dataChanged()" class="btn btn-success">Success</button>
 						</div>
 
 						<div class="col-md-6">							
 							<div class="col-md-6"> 								
-								<div  id ="color-preview-bg" style="background-color: rgb(225, 225, 225);"></div>
-								<input type="text" id="color-code-bg" name="color" size="7">		
-								<button type="button" id="background-color" class="btn btn-default">Bg color</button>
-
-
+								<div  id ="color-preview-bg" ng-style="{'background-color': app.input.bgColor}"></div>
+								<input ng-model="app.input.bgColor" type="text" id="color-code-bg" name="color" size="7">		
+								<button type="button" ng-click="app.pickColor('bgColor')" id="background-color" class="btn btn-default">Bg color</button>
 							</div>
 							<div>								
 								<div class="col-md-6">
-									<div  id ="color-preview-fill" style="background-color: rgb(0, 0, 0);"></div>
-									<input type="text" id="color-code-fill" name="fillcolor" size="7">
-									<button type="button" id="fill-color" class="btn btn-default">Fillcolor</button>
+									<div  id ="color-preview-fill" ng-style="{'background-color': app.input.fillColor}"></div>
+									<input ng-model="app.input.fillColor" type="text" id="color-code-fill" name="fillcolor" size="7">
+									<button type="button" ng-click="app.pickColor('fillColor')" id="fill-color" class="btn btn-default">Fillcolor</button>
 								</div>
 
 							</div>	
