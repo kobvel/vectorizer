@@ -54,7 +54,7 @@ gulp.task('js', function() {
 gulp.task('views', function() {
   return gulp.src('./src/**/*.html')
     .pipe(plumber())
-    .pipe(gulp.dest('./public/views'));
+    .pipe(gulp.dest('./public/'));
 });
 
 gulp.task('watch', ['build'], function() {

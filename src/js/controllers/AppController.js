@@ -66,7 +66,11 @@
       var promise = Uploader
         .upload(fd)
         .then(function uploadSuccess(response) {
-          Stage.loadData(response.data);
+          Stage.loadData(response.data).then(function() {
+            $scope.$broadcast('imageChanged', {
+              image: self.stage.image
+            })
+          })
         }, function uploadError(reason) {
           console.log(reason);
         });

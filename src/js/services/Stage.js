@@ -3,16 +3,22 @@
     .module('Vectorizer.services')
     .service('Stage', Stage);
 
+  Stage.$inject = ['$q'];
 
-  function Stage() {
+  function Stage($q) {
     return {
       stage: {},
       imageLayer: null,
       svgLayer: null,
       loadData: loadData,
+      image: null,
+      svg: null,
     };
 
     function loadData(data) {
+      var p = $q.defer();
+      var self = this;
+
 
       this.imageLayer = new Konva.Layer();
       this.svgLayer = new Konva.Layer();
@@ -28,7 +34,7 @@
       var svgObj = new Image();
 
       imageObj.onload = function() {
-        image = new Konva.Image({
+        self.image = new Konva.Image({
           x: 0,
           y: 0,
           image: imageObj,
@@ -39,11 +45,11 @@
         stage.width(imageObj.width);
         stage.height(imageObj.height);
 
-        imageLayer.add(image);
+        imageLayer.add(self.image);
         imageLayer.draw();
         imageLayer.visible(false);
         svgObj.onload = function() {
-          svg = new Konva.Image({
+          self.svg = new Konva.Image({
             x: 0,
             y: 0,
             image: svgObj,
@@ -51,8 +57,9 @@
             height: imageObj.height
           });
 
-          svgLayer.add(svg);
+          svgLayer.add(self.svg);
           svgLayer.draw();
+          p.resolve();
         };
 
         svgObj.src = data.svg;
@@ -60,6 +67,7 @@
 
       imageObj.src = data.image;
 
+      return p.promise;
 
     }
 
