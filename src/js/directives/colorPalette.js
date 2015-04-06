@@ -3,7 +3,9 @@
     .module('Vectorizer.directives')
     .directive('colorPalette', colorPalette);
 
-  function colorPalette() {
+  colorPalette.$inject = ['$document'];
+
+  function colorPalette($document) {
     return {
       restrict: 'E',
 
@@ -15,11 +17,24 @@
         scope.$on('setModel', setModel);
 
         function setModel(event, data) {
+          $document.bind('click', bindClickDocument);
           scope.picker = data.model;
           elements = element.find('.swatch');
           elements.bind('mousemove', bindMouseMove);
           elements.bind('click', setClickHandler);
         };
+
+        function bindClickDocument(event) {
+          var isChild = element.has(event.target).length > 0;
+          var isSelf = element[0] == event.target;
+          var isInside = isChild || isSelf;
+
+          if (!isInside) {
+            $document.unbind('click', bindClickDocument);
+            elements.unbind('mousemove', bindMouseMove);
+            elements.unbind('click', setClickHandler);
+          }
+        }
 
         function bindMouseMove(e) {
           scope.app.input[scope.picker] = colorToHex($(this).css('background-color'));

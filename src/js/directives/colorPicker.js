@@ -13,8 +13,6 @@
         scope.$on('setModel', setModel);
         var ctx, canvas;
 
-
-
         function bindClickDocument(event) {
           var isChild = element.has(event.target).length > 0;
           var isSelf = element[0] == event.target;
@@ -24,7 +22,6 @@
             $document.unbind('click', bindClickDocument);
             canvas.unbind('mousemove', bindMouseMove);
             canvas.unbind('click', setClickHandler);
-
           }
         }
 
