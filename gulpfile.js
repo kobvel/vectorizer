@@ -9,11 +9,14 @@ var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 
 var vendors = {
-  css: [],
+  css: ['./vendors/animated-checkboxes/css/component.css',
+    './vendors/animated-checkboxes/css/normalize.css'
+  ],
   js: [
     './vendors/jquery/dist/jquery.js',
     './vendors/angular/angular.js',
     './vendors/angular-bootstrap/ui-bootstrap-tpls.js',
+    './vendors/animated-checkboxes/js/svgcheckbx.js',
     './vendors/konva/konva.js',
     './vendors/seiyria-bootstrap-slider/js/bootstrap-slider.js',
     './vendors/angular-bootstrap-slider/slider.js',

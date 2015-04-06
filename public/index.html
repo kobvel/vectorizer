@@ -53,6 +53,17 @@
 							<div class="form-group">
 							<select class="form-control" ng-options="item for item in app.turnpolicy" ng-model="app.input.turnpolicy">
 							</select>
+							</div>					
+
+							<div class="container">			
+								<section>
+									<div class="ac-custom ac-checkbox ac-boxfill" autocomplete="off">									
+									<ul>
+									<li><input ng-model="app.tight" ng-click="app.changeCheckBox()"   type="checkbox"><label >Tight</label></li>
+									<li><input ng-model="app.flat" ng-click="app.changeCheckBox()"  type="checkbox"><label >Invert</label></li>		
+									</ul>
+								</div>
+								</section>		
 							</div>
 
 							
@@ -86,16 +97,16 @@
 						</div>
 					</form>
 
-
-
 				</div>
 				<div class="btn-group">
         						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'" uncheckable>SVG</label>
         						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'" uncheckable>IMG</label>
        							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'ALL'" uncheckable>ALL</label>
-    						</div>
-							
-							<button type="button" ng-click="app.dataChanged()" class="btn btn-success">Success</button>
+    			</div>
+						
+				<button type="button" ng-click="app.dataChanged()" class="btn btn-success">Success</button>
+
+
 			</div>
 		</div>
 	</div>

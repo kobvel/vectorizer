@@ -25,7 +25,10 @@
         fillcolor: '#FFFFFF',
       },
       turnpolicy: ['black', 'white', 'minority', 'majority', 'left', 'right', 'random'],
+      tight: false,
+      flat: false,
     });
+
 
     function pickColor($event, model) {
       $event.stopPropagation();
@@ -34,8 +37,18 @@
       });
     };
 
+    function changeCheckBox() {
+      console.log("aslaslaslals");
+
+    };
+    /*    function checkboxChange() {
+      console.log(self);
+      self.tight: false,
+      self.flat: false
+    };*/
+
     function changeVisibleLayer() {
-      console.log(self.stage);
+      console.log(self);
       if (self.visibleLayer == 'SVG') {
         self.stage.svgLayer.visible(true);
         self.stage.imageLayer.visible(false);
