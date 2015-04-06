@@ -28,12 +28,7 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
   var paramsData = req.body.params;
 
   var paramsTypes = ['turdsize', 'alphamax', 'opttolerance', 'turnpolicy', 'color', 'fillcolor'];
-  var defaultParams = {
-    turdsize: 2,
-    alphamax: 1,
-    opttolerance: 2,
-    turnpolicy: 'black',
-  };
+
 
   var jsonparam = paramsData ? JSON.parse(paramsData) : {};
   var match = base64Data.match(/data:image\/(.+);base64,(.+)/);
@@ -80,11 +75,6 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
         var bmp = image.path + '.bmp';
         var svg = image.path + '.svg';
         var options = ["--svg"];
-
-        Object.keys(defaultParams).forEach(function(key) {
-          options.push('--' + key);
-          options.push(defaultParams[key]);
-        });
 
         if (jsonparam) {
           Object.keys(jsonparam).forEach(function(i) {

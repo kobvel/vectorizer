@@ -21,13 +21,14 @@
         alphamax: 1,
         turnpolicy: 'black',
         opttolerance: 0.2,
-        bgColor: null,
-        fillColor: null,
+        color: '#000000',
+        fillcolor: '#FFFFFF',
       },
       turnpolicy: ['black', 'white', 'minority', 'majority', 'left', 'right', 'random'],
     });
 
-    function pickColor(model) {
+    function pickColor($event, model) {
+      $event.stopPropagation();
       $scope.$broadcast("setModel", {
         model: model
       });

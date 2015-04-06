@@ -67,51 +67,39 @@
 
 						<div class="col-md-6">							
 							<div class="col-md-6"> 								
-								<div  id ="color-preview-bg" ng-style="{'background-color': app.input.bgColor}"></div>
-								<input ng-model="app.input.bgColor" type="text" id="color-code-bg" name="color" size="7">		
-								<button type="button" ng-click="app.pickColor('bgColor')" id="background-color" class="btn btn-default">Bg color</button>
+								<div  id ="color-preview-bg" ng-style="{'background-color': app.input.color}"></div>
+								<input ng-model="app.input.color" type="text"  name="color" size="7">		
+								<button type="button" ng-click="app.pickColor($event,'color')"  class="btn btn-default">Bg color</button>
 							</div>
 							<div>								
 								<div class="col-md-6">
-									<div  id ="color-preview-fill" ng-style="{'background-color': app.input.fillColor}"></div>
-									<input ng-model="app.input.fillColor" type="text" id="color-code-fill" name="fillcolor" size="7">
-									<button type="button" ng-click="app.pickColor('fillColor')" id="fill-color" class="btn btn-default">Fillcolor</button>
+									<div  id ="color-preview-fill" ng-style="{'background-color': app.input.fillcolor}"></div>
+									<input ng-model="app.input.fillcolor" type="text" name="fillcolor" size="7">
+									<button type="button" ng-click="app.pickColor($event,'fillcolor')"  class="btn btn-default">fillcolor</button>
 								</div>
 
 							</div>	
 
 
 							<div class="row">
-								<div class="col-md-12">
-									<!-- <button type="button" id ="get-palette" class="btn btn-warning">Get palette of colors</button> -->
+								<div class="col-md-12">									
 									<div class="row">
 										<div class="swatches" >											
 										<color-palette></color-palette>
 										</div>
-
-
-									</div>
-
-									
+									</div>									
 								</div>
 							</div>
 						</div>
-
-
 					</form>
 				</div>
 			</div>
-
-
 		</div>
 	</div>
 </div>
 
-
-
 <script src="js/vendors.js"></script>
 <script src="js/app.min.js"></script>
-
 
 </body>
 
