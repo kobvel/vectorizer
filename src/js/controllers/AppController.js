@@ -1,18 +1,11 @@
 (function() {
   angular
     .module('Vectorizer.controllers')
-    .controller('AppController', AppController)
-    .controller('CheckboxController', CheckboxController);
+    .controller('AppController', AppController);
+
 
   AppController.$inject = ['Uploader', 'Loader', 'Stage', '$scope'];
-  CheckboxController.$inject = ['$scope'];
 
-  function CheckboxController($scope) {
-    $scope.checkboxModel = {
-      tight: false,
-      flat: false
-    };
-  }
 
   function AppController(Uploader, Loader, Stage, $scope) {
     var self = this;
@@ -32,6 +25,8 @@
         opttolerance: 0.2,
         color: '#000000',
         fillcolor: '#FFFFFF',
+        flat: false,
+        tight: false
       },
       turnpolicy: ['black', 'white', 'minority', 'majority', 'left', 'right', 'random'],
     });

@@ -9,10 +9,8 @@ var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 
 var vendors = {
-  css: ['./vendors/animated-checkboxes/css/component.css',
-    './vendors/animated-checkboxes/css/normalize.css',
-    './vendors/animated-border-menus/css/icons.css',
-    './vendors/animated-border-menus/css/style2.css'
+  fonts: [
+    './vendors/fontawesome/fonts/*',
   ],
   js: [
     './vendors/jquery/dist/jquery.js',
@@ -48,6 +46,12 @@ gulp.task('vendors', function() {
     .pipe(gulp.dest('./public/js'));
 });
 
+gulp.task('fonts', function() {
+  return gulp.src(vendors.fonts)
+    .pipe(plumber())
+    .pipe(gulp.dest('./public/fonts'));
+});
+
 gulp.task('js', function() {
   return gulp.src(['./src/js/app.js', './src/js/{controllers,directives,services}/*.js'])
     .pipe(plumber())
@@ -80,8 +84,12 @@ gulp.task('watch', ['build'], function() {
   watch(vendors.js, function() {
     gulp.start('vendors');
   });
+
+  watch(vendors.fonts, function() {
+    gulp.start('fonts');
+  });
 });
 
-gulp.task('build', ['less', 'vendors', 'js', 'views']);
+gulp.task('build', ['less', 'vendors', 'js', 'views', 'fonts']);
 
 gulp.task('default', ['build']);

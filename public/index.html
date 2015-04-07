@@ -44,20 +44,19 @@
 							<select class="form-control" ng-options="item for item in app.turnpolicy" ng-model="app.input.turnpolicy">
 							</select>
 							</div>					
-
-							<div class="container">			
+							
+							<div>			
 								<section>
-									<div class="ac-custom ac-checkbox ac-boxfill" autocomplete="off" ng-controller = "CheckboxController">									
+									<div class="ac-custom ac-checkbox ac-boxfill" autocomplete="off" >								
 									<ul>
-									<li><input ng-model="checkboxModel.tight" type="checkbox"><label >Tight</label></li>
-									<li><input ng-model="checkboxModel.flat" type="checkbox"><label >Invert</label></li>		
+									<li><input ng-model="app.input.tight" type="checkbox"><label >Tight</label></li>
+									<li><input ng-model="app.input.flat" type="checkbox"><label >Invert</label></li>		
 									</ul>
-									 <tt>tight = {{checkboxModel.tight}}</tt><br/>
- 									 <tt>flat = {{checkboxModel.flat}}</tt><br/>
+									 <tt>tight = {{app.input.tight}}</tt><br/>
+ 									 <tt>flat = {{app.input.flat}}</tt><br/>
 								</div>
 								</section>		
 							</div>
-
 							
 						</div>
 
@@ -106,7 +105,7 @@
 			<nav id="bt-menu" class="bt-menu">
 				<a href="#" class="bt-menu-trigger"><span>Menu</span></a>
 				<ul>
-					<li><a href="#" class="bt-icon icon-zoom">Zoom</a></li>
+					<li><a href="#" class="bt-icon icon-twitter">Zoom</a></li>
 					<li><a href="#" class="bt-icon icon-refresh">Refresh</a></li>
 					<li><a href="#" class="bt-icon icon-lock">Lock</a></li>
 					<li><a href="#" class="bt-icon icon-speaker">Sound</a></li>
