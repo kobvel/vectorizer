@@ -25,7 +25,7 @@
         opttolerance: 0.2,
         color: '#000000',
         fillcolor: '#FFFFFF',
-        flat: false,
+        invert: false,
         tight: false
       },
       turnpolicy: ['black', 'white', 'minority', 'majority', 'left', 'right', 'random'],
