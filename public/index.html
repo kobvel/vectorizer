@@ -12,17 +12,7 @@
 		  <div class="dot1"></div>
 		  <div class="dot2"></div>
 		</div>
-	</div>
-
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">
-					<img alt="Brand" src="...">
-				</a>
-			</div>
-		</div>
-	</nav>
+	</div>	
 	<div class="container-fluid">
 		<div class="row-fluid ">
 			<div class="col-md-8">
@@ -57,11 +47,13 @@
 
 							<div class="container">			
 								<section>
-									<div class="ac-custom ac-checkbox ac-boxfill" autocomplete="off">									
+									<div class="ac-custom ac-checkbox ac-boxfill" autocomplete="off" ng-controller = "CheckboxController">									
 									<ul>
-									<li><input ng-model="app.tight" ng-click="app.changeCheckBox()"   type="checkbox"><label >Tight</label></li>
-									<li><input ng-model="app.flat" ng-click="app.changeCheckBox()"  type="checkbox"><label >Invert</label></li>		
+									<li><input ng-model="checkboxModel.tight" type="checkbox"><label >Tight</label></li>
+									<li><input ng-model="checkboxModel.flat" type="checkbox"><label >Invert</label></li>		
 									</ul>
+									 <tt>tight = {{checkboxModel.tight}}</tt><br/>
+ 									 <tt>flat = {{checkboxModel.flat}}</tt><br/>
 								</div>
 								</section>		
 							</div>
@@ -110,7 +102,18 @@
 			</div>
 		</div>
 	</div>
-</div>
+	<div class="container">			
+			<nav id="bt-menu" class="bt-menu">
+				<a href="#" class="bt-menu-trigger"><span>Menu</span></a>
+				<ul>
+					<li><a href="#" class="bt-icon icon-zoom">Zoom</a></li>
+					<li><a href="#" class="bt-icon icon-refresh">Refresh</a></li>
+					<li><a href="#" class="bt-icon icon-lock">Lock</a></li>
+					<li><a href="#" class="bt-icon icon-speaker">Sound</a></li>
+					<li><a href="#" class="bt-icon icon-star">Favorite</a></li>
+				</ul>
+			</nav>
+	</div>	
 
 <script src="js/vendors.js"></script>
 <script src="js/app.min.js"></script>

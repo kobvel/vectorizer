@@ -1,9 +1,18 @@
 (function() {
   angular
     .module('Vectorizer.controllers')
-    .controller('AppController', AppController);
+    .controller('AppController', AppController)
+    .controller('CheckboxController', CheckboxController);
 
   AppController.$inject = ['Uploader', 'Loader', 'Stage', '$scope'];
+  CheckboxController.$inject = ['$scope'];
+
+  function CheckboxController($scope) {
+    $scope.checkboxModel = {
+      tight: false,
+      flat: false
+    };
+  }
 
   function AppController(Uploader, Loader, Stage, $scope) {
     var self = this;
@@ -25,27 +34,15 @@
         fillcolor: '#FFFFFF',
       },
       turnpolicy: ['black', 'white', 'minority', 'majority', 'left', 'right', 'random'],
-      tight: false,
-      flat: false,
     });
-
 
     function pickColor($event, model) {
       $event.stopPropagation();
       $scope.$broadcast("setModel", {
         model: model
       });
-    };
-
-    function changeCheckBox() {
-      console.log("aslaslaslals");
 
     };
-    /*    function checkboxChange() {
-      console.log(self);
-      self.tight: false,
-      self.flat: false
-    };*/
 
     function changeVisibleLayer() {
       console.log(self);

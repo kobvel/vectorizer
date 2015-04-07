@@ -10,7 +10,9 @@ var sourcemaps = require('gulp-sourcemaps');
 
 var vendors = {
   css: ['./vendors/animated-checkboxes/css/component.css',
-    './vendors/animated-checkboxes/css/normalize.css'
+    './vendors/animated-checkboxes/css/normalize.css',
+    './vendors/animated-border-menus/css/icons.css',
+    './vendors/animated-border-menus/css/style2.css'
   ],
   js: [
     './vendors/jquery/dist/jquery.js',
@@ -20,6 +22,8 @@ var vendors = {
     './vendors/konva/konva.js',
     './vendors/seiyria-bootstrap-slider/js/bootstrap-slider.js',
     './vendors/angular-bootstrap-slider/slider.js',
+    './vendors/animated-border-menus/js/classie.js',
+    './vendors/animated-border-menus/js/borderMenu.js',
     './vendors/color-thief/src/color-thief.js'
   ]
 }

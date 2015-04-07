@@ -31,6 +31,7 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
 
 
   var jsonparam = paramsData ? JSON.parse(paramsData) : {};
+  console.log(jsonparam);
   var match = base64Data.match(/data:image\/(.+);base64,(.+)/);
   var image = {};
 
