@@ -40,7 +40,7 @@
     };
 
     function changeVisibleLayer() {
-      console.log(self);
+      console.log(self.visibleLayer);
       if (self.visibleLayer == 'SVG') {
         self.stage.svgLayer.visible(true);
         self.stage.imageLayer.visible(false);

@@ -52,8 +52,6 @@
 									<li><input ng-model="app.input.tight" type="checkbox"><label >Tight</label></li>
 									<li><input ng-model="app.input.invert" type="checkbox"><label >Invert</label></li>		
 									</ul>
-									 <tt>tight = {{app.input.tight}}</tt><br/>
- 									 <tt>invert = {{app.input.invert}}</tt><br/>
 								</div>
 								</section>		
 							</div>
@@ -90,9 +88,9 @@
 
 				</div>
 				<div class="btn-group">
-        						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'" uncheckable>SVG</label>
-        						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'" uncheckable>IMG</label>
-       							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'ALL'" uncheckable>ALL</label>
+        						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'" >SVG</label>
+        						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'" >IMG</label>
+       							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'ALL'" >ALL</label>
     			</div>
 						
 				<button type="button" ng-click="app.dataChanged()" class="btn btn-success">Success</button>
