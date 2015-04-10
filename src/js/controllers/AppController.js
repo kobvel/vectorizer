@@ -3,7 +3,6 @@
     .module('Vectorizer.controllers')
     .controller('AppController', AppController);
 
-
   AppController.$inject = ['Uploader', 'Loader', 'Stage', '$scope'];
 
 
@@ -17,18 +16,21 @@
       pickColor: pickColor,
       dataChanged: dataChanged,
       changeVisibleLayer: changeVisibleLayer,
+      changeToggleCollapse: changeToggleCollapse,
       visibleLayer: null,
+      isCollapsed: true,
+      gamma: 0.5,
       input: {
         turdsize: 2,
         alphamax: 1,
-        turnpolicy: 'black',
+        turnpolicy: 'minority',
         opttolerance: 0.2,
         color: '#000000',
         fillcolor: '#FFFFFF',
         invert: false,
         tight: false
       },
-      turnpolicy: ['black', 'white', 'minority', 'majority', 'left', 'right', 'random'],
+      turnpolicy: ['minority', 'majority', 'black', 'white', 'left', 'right', 'random'],
     });
 
     function pickColor($event, model) {
@@ -38,6 +40,10 @@
       });
 
     };
+
+    function changeToggleCollapse() {
+      self.isCollapsed = !self.isCollapsed;
+    }
 
     function changeVisibleLayer() {
       console.log(self.visibleLayer);
@@ -59,6 +65,7 @@
         .getFileData(self.file)
         .then(function getDataSuccess(fileData) {
           fileData.append('params', JSON.stringify(self.input));
+          fileData.append('gamma', JSON.stringify(self.gamma));
           console.log(fileData);
           uploadImageData(fileData);
         }, function getDataError(reason) {

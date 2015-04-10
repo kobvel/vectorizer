@@ -39,12 +39,13 @@
       var pbmObj = new Image();
 
       imageObj.onload = function() {
+        var scale = self.offsetWidth / imageObj.width;
         self.image = new Konva.Image({
           x: 0,
           y: 0,
           image: imageObj,
-          width: imageObj.width,
-          height: imageObj.height
+          width: imageObj.width * scale,
+          height: imageObj.height * scale
         });
 
         stage.width(imageObj.width);
@@ -59,8 +60,8 @@
             x: 0,
             y: 0,
             image: svgObj,
-            width: imageObj.width,
-            height: imageObj.height
+            width: imageObj.width * scale,
+            height: imageObj.height * scale
           });
 
           svgLayer.add(self.svg);
@@ -73,8 +74,8 @@
             x: 0,
             y: 0,
             image: pbmObj,
-            width: imageObj.width,
-            height: imageObj.height
+            width: imageObj.width * scale,
+            height: imageObj.height * scale
           });
 
           pbmLayer.add(self.pbm);

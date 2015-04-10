@@ -15,7 +15,7 @@
           width: 110,
           height: 110
         });
-
+        scope.stage.offsetWidth = element.parent()[0].offsetWidth - 30;
         console.log(scope.stage)
       }
     };

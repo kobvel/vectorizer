@@ -26,9 +26,8 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
 
   var base64Data = req.body.imageData;
   var paramsData = req.body.params;
-
+  var gammaData = req.body.gamma;
   var paramsTypes = ['turdsize', 'alphamax', 'opttolerance', 'turnpolicy', 'color', 'fillcolor', 'tight', 'invert'];
-
   var jsonparam = paramsData ? JSON.parse(paramsData) : {};
 
   var match = base64Data.match(/data:image\/(.+);base64,(.+)/);
@@ -72,7 +71,7 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
       function convertImgPBM(callback) {
         var bmp = image.path + '.bmp';
         var pbm = image.path + '.pbm';
-        var child = exec('mkbitmap ' + bmp + ' -n ' + pbm,
+        var child = exec('mkbitmap ' + bmp + ' -n -t ' + gammaData + ' ' + pbm,
           function(error, stdout, stderr) {
 
             if (error) {

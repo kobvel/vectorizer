@@ -20,8 +20,7 @@ var vendors = {
     './vendors/konva/konva.js',
     './vendors/seiyria-bootstrap-slider/js/bootstrap-slider.js',
     './vendors/angular-bootstrap-slider/slider.js',
-    './vendors/animated-border-menus/js/classie.js',
-    './vendors/animated-border-menus/js/borderMenu.js',
+    './vendors/menu/js/modernizr.custom.js',
     './vendors/color-thief/src/color-thief.js'
   ]
 }
