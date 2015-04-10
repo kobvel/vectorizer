@@ -13,6 +13,7 @@
       loadData: loadData,
       image: null,
       svg: null,
+      pbm: null,
     };
 
     function loadData(data) {
@@ -22,16 +23,20 @@
 
       this.imageLayer = new Konva.Layer();
       this.svgLayer = new Konva.Layer();
+      this.pbmLayer = new Konva.Layer();
       var stage = this.stage;
       var imageLayer = this.imageLayer;
       var svgLayer = this.svgLayer;
+      var pbmLayer = this.pbmLayer;
       stage.destroyChildren();
 
 
       stage.add(imageLayer);
       stage.add(svgLayer);
+      stage.add(pbmLayer);
       var imageObj = new Image();
       var svgObj = new Image();
+      var pbmObj = new Image();
 
       imageObj.onload = function() {
         self.image = new Konva.Image({
@@ -48,6 +53,7 @@
         imageLayer.add(self.image);
         imageLayer.draw();
         imageLayer.visible(false);
+
         svgObj.onload = function() {
           self.svg = new Konva.Image({
             x: 0,
@@ -62,6 +68,21 @@
           p.resolve();
         };
 
+        pbmObj.onload = function() {
+          self.pbm = new Konva.Image({
+            x: 0,
+            y: 0,
+            image: pbmObj,
+            width: imageObj.width,
+            height: imageObj.height
+          });
+
+          pbmLayer.add(self.pbm);
+          pbmLayer.draw();
+          pbmLayer.visible(false);
+          p.resolve();
+        };
+        pbmObj.src = data.pbm;
         svgObj.src = data.svg;
       };
 

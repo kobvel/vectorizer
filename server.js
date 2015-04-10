@@ -46,7 +46,6 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
 
       function moveFile(callback) {
 
-
         fs.writeFile(
           image.srcPath,
           new Buffer(match[2].replace(/ /g, '+'), 'base64'),
@@ -58,9 +57,8 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
             callback(null);
           });
       },
-      function convertImg(callback) {
+      function convertImgBMP(callback) {
         var bmp = image.path + '.bmp';
-
         var child = exec('convert ' + image.srcPath + ' ' + bmp,
           function(error, stdout, stderr) {
 
@@ -71,9 +69,36 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
             callback(null);
           });
       },
-      function processImg(callback) {
+      function convertImgPBM(callback) {
         var bmp = image.path + '.bmp';
+        var pbm = image.path + '.pbm';
+        var child = exec('mkbitmap ' + bmp + ' -n ' + pbm,
+          function(error, stdout, stderr) {
+
+            if (error) {
+              callback(error);
+            }
+
+            callback(null);
+          });
+      },
+      function convertImgPBM(callback) {
+        var bmp = image.path + '.bmp';
+        var pbm = image.path + '.pbm';
+        var child = exec('convert ' + pbm + ' ' + bmp,
+          function(error, stdout, stderr) {
+
+            if (error) {
+              callback(error);
+            }
+
+            callback(null);
+          });
+      },
+
+      function processImg(callback) {
         var svg = image.path + '.svg';
+        var pbm = image.path + '.pbm';
         var options = ["--svg"];
 
         if (jsonparam) {
@@ -90,13 +115,11 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
             }
           });
         };
-        console.log(options);
-        options = options.concat([bmp, '-o', svg]);
 
-        //console.log('options', options);
+        options = options.concat([pbm, '-o', svg]);
 
         var potrace = spawn('potrace', options);
-
+        console.log('potrace', options);
         potrace.on('error', function(error) {
           callback(error);
         });
@@ -132,7 +155,8 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
 
       res.send({
         image: image.dir + image.name + '_resized' + image.ext,
-        svg: image.dir + image.name + '.svg'
+        svg: image.dir + image.name + '.svg',
+        pbm: image.dir + image.name + '.bmp'
       });
     });
 });
