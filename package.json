@@ -32,6 +32,7 @@
     "multipart": "^0.1.5",
     "serve-static": "^1.9.1",
     "express": "~4.12.3",
-    "gulp-typescript": "~2.6.0"
+    "gulp-typescript": "~2.6.0",
+    "gulp-tsc": "~0.9.4"
   }
 }

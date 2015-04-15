@@ -7,7 +7,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
-var ts = require('gulp-typescript');
+var tsc = require('gulp-tsc');
 
 var vendors = {
   fonts: [
@@ -52,6 +52,21 @@ gulp.task('fonts', function() {
     .pipe(gulp.dest('./public/fonts'));
 });
 
+gulp.task('clean', function(cb) {
+  del('./src/js/test/*.js', cb);
+})
+
+gulp.task('ts', function() {
+  return gulp.src(['./src/ts/*.ts'])
+    .pipe(tsc({
+      module: "CommonJS",
+      sourcemap: true,
+      emitError: false,
+      target: "es5"
+    }))
+    .pipe(gulp.dest('./src/js/test'));
+});
+
 gulp.task('js', function() {
   return gulp.src(['./src/js/app.js', './src/js/{controllers,directives,services}/*.js'])
     .pipe(plumber())
@@ -73,6 +88,10 @@ gulp.task('watch', ['build'], function() {
     gulp.start('less');
   });
 
+  watch('./src/ts/*.ts', function() {
+    gulp.start('ts');
+  });
+
   watch('./src/js/**/*.js', function() {
     gulp.start('js');
   });
@@ -90,6 +109,6 @@ gulp.task('watch', ['build'], function() {
   });
 });
 
-gulp.task('build', ['less', 'vendors', 'js', 'views', 'fonts']);
+gulp.task('build', ['less', 'vendors', 'ts', 'js', 'views', 'fonts']);
 
 gulp.task('default', ['build']);
