@@ -7,6 +7,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
+var ts = require('gulp-typescript');
 
 var vendors = {
   fonts: [

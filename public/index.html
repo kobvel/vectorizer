@@ -72,21 +72,16 @@
 							
 						</div>
 
-						<div class="col-md-6">							
-							<div class="col-md-6"> 								
-								<div  id ="color-preview-bg" ng-style="{'background-color': app.input.color}"></div>
+						<div class="col-md-4">							
+														
+								<div id ="color-preview-bg" ng-style="{'background-color': app.input.color}" ng-click="app.pickColor($event,'color')">
+								<i class="fa fa-paint-brush fa-5x"></i></div>
 								<input ng-model="app.input.color" type="text"  name="color" size="7">		
-								<button type="button" ng-click="app.pickColor($event,'color')"  class="btn btn-default">Bg color</button>
-							</div>
-							<div>								
-								<div class="col-md-6">
-									<div  id ="color-preview-fill" ng-style="{'background-color': app.input.fillcolor}"></div>
-									<input ng-model="app.input.fillcolor" type="text" name="fillcolor" size="7">
-									<button type="button" ng-click="app.pickColor($event,'fillcolor')"  class="btn btn-default">fillcolor</button>
-								</div>
+								
+							
 
-							</div>	
-
+								<div  id ="color-preview-fill" ng-style="{'background-color': app.input.fillcolor}" ng-click="app.pickColor($event,'fillcolor')"><i class="fa fa-tint fa-5x "></i></div>
+								<input ng-model="app.input.fillcolor" type="text" name="fillcolor" size="7">
 
 							<div class="row">
 								<div class="col-md-12">									
@@ -97,7 +92,9 @@
 									</div>									
 								</div>
 							</div>
+				
 
+						</div>	
 							<ul class="cbp-vimenu">
 								<li><a href="#" class="icon-logo">Logo</a></li>
 								<li><a href="#" class="icon-archive">Archive</a></li>
@@ -109,9 +106,7 @@
 								<li><a href="#" class="icon-images">Images</a></li>
 								<li><a href="#" class="icon-download">Download</a></li>
 							</ul>
-
-
-						</div>
+						
 					</form>
 
 				</div>
