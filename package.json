@@ -33,6 +33,11 @@
     "serve-static": "^1.9.1",
     "express": "~4.12.3",
     "gulp-typescript": "~2.6.0",
-    "gulp-tsc": "~0.9.4"
+    "gulp-tsc": "~0.9.4",
+    "gulp-tsd": "0.0.4",
+    "gulp-inject": "~1.2.0",
+    "gulp-tslint": "~2.0.0",
+    "gulp-rimraf": "~0.1.1",
+    "tsd": "~0.5.7"
   }
 }
