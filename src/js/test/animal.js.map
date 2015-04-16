@@ -1,1 +1,0 @@
-{"version":3,"file":"animal.js","sourceRoot":"","sources":["../src/ts/animal.ts"],"names":["Animal","Animal.constructor","Animal.move"],"mappings":"AAAA;IACIA,gBAAmBA,IAAYA;QAAZC,SAAIA,GAAJA,IAAIA,CAAQA;IAAIA,CAACA;IACpCD,qBAAIA,GAAJA,UAAKA,MAAcA;QACfE,KAAKA,CAACA,IAAIA,CAACA,IAAIA,GAAGA,SAASA,GAAGA,MAAMA,GAAGA,IAAIA,CAACA,CAACA;IACjDA,CAACA;IACLF,aAACA;AAADA,CAACA,AALD,IAKC"}
