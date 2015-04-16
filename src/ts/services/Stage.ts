@@ -1,3 +1,5 @@
+///<reference path="../../../tools/typings/tsd.d.ts" />
+///<reference path="../../../tools/typings/typescriptApp.d.ts" />
 declare var Konva:any;
 
 (function() {

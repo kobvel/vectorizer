@@ -1,14 +1,16 @@
+///<reference path="../../../tools/typings/tsd.d.ts" />
+///<reference path="../../../tools/typings/typescriptApp.d.ts" />
+
 (function() {
   angular
     .module('Vectorizer.controllers')
     .controller('AppController', AppController);
 
   AppController.$inject = ['Uploader', 'Loader', 'Stage', '$scope'];
-
-
+  
   function AppController(Uploader, Loader, Stage, $scope) {
     var self = this;
-
+    var a: number = 3;
     angular.extend(self, {
       stage: Stage,
       loader: Loader,

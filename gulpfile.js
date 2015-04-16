@@ -10,12 +10,13 @@ var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 var inject = require('gulp-inject');
 var tslint = require('gulp-tslint');
+var rimraf = require('gulp-rimraf');
 var Config = require('./gulpfile.config');
 
 var config = new Config();
 
 var tsc = require('gulp-typescript')
-var tsd = require('gulp-tsd');
+
 
 var vendors = {
   fonts: [
@@ -46,6 +47,7 @@ gulp.task('gen-ts-refs', function() {
       return '/// <reference path="../..' + filepath + '" />';
     }
   })).pipe(gulp.dest(config.typings));
+
 });
 
 gulp.task('ts-lint', function() {
@@ -59,6 +61,7 @@ gulp.task('compile-ts', function() {
   ]; //reference to app.d.ts files
 
   var tsResult = gulp.src(sourceTsFiles)
+    .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(tsc({
       target: 'ES5',
@@ -67,14 +70,15 @@ gulp.task('compile-ts', function() {
     }));
   tsResult.dts.pipe(gulp.dest(config.tsOutputPath));
   return tsResult.js
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(config.tsOutputPath));
+    .pipe(concat('app.min.js'))
+    .pipe(sourcemaps.write(''))
+    .pipe(gulp.dest('./public/js'));
 });
 
 gulp.task('clean-ts', function() {
   var typeScriptGenFiles = [config.tsOutputPath, // path to generated JS files
-    config.sourceApp + '**/*.js', // path to all JS files auto gen'd by editor
-    config.sourceApp + '**/*.js.map' // path to all sourcemap files auto gen'd by editor
+    config.globalPath + '/js/*.js', // path to all JS files auto gen'd by editor
+    config.globalPath + '/js/*.js.map' // path to all sourcemap files auto gen'd by editor
   ];
 
   // delete the files
@@ -111,15 +115,6 @@ gulp.task('fonts', function() {
     .pipe(gulp.dest('./public/fonts'));
 });
 
-gulp.task('clean', function(callback) {
-  del('./src/js/test/*.js', callback);
-})
-
-gulp.task('tsd', function() {
-  return gulp.src('./gulp_tsd.json')
-    .pipe(tsd());
-});
-
 gulp.task('ts', function() {
   return gulp.src(['./src/ts/*.ts'])
     .pipe(tsc({
@@ -131,27 +126,6 @@ gulp.task('ts', function() {
     .pipe(gulp.dest('./src/js/test'));
 });
 
-//For first js native
-gulp.task('js', function() {
-  return gulp.src(['./src/js/app.js', './src/js/{controllers,directives,services}/*.js'])
-    .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(concat('app.min.js'))
-    //.pipe(uglify())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./public/js'));
-});
-
-//For compiled js by ts js native
-gulp.task('js1', function() {
-  return gulp.src(['./src/js1/app.js', './src/js/{controllers,directives,services}/*.js'])
-    .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(concat('app.min.js'))
-    //.pipe(uglify())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./public/js'));
-});
 
 gulp.task('views', function() {
   return gulp.src('./src/**/*.html')
@@ -170,9 +144,6 @@ gulp.task('watch', ['build'], function() {
     gulp.start('gen-ts-refs');
   });
 
-  watch('./src/js/**/*.js', function() {
-    gulp.start('js1');
-  });
 
   watch('./src/views/**/*.html', function() {
     gulp.start('views');
@@ -190,6 +161,6 @@ gulp.task('watch', ['build'], function() {
 
 
 
-gulp.task('build', ['less', 'vendors', 'ts-lint', 'compile-ts', 'gen-ts-refs', 'js1', 'views', 'fonts']);
+gulp.task('build', ['less', 'vendors', 'ts-lint', 'compile-ts', 'gen-ts-refs', 'views', 'fonts']);
 
 gulp.task('default', ['build']);

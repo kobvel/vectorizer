@@ -1,6 +1,9 @@
+///<reference path="../../../tools/typings/tsd.d.ts" />
+///<reference path="../../../tools/typings/typescriptApp.d.ts" />
+
 declare var ColorThief:any;
 (function() {
-  angular
+    angular
     .module('Vectorizer.directives')
     .directive('colorPalette', colorPalette);
 
