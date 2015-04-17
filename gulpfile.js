@@ -26,6 +26,7 @@ var vendors = {
     './vendors/jquery/dist/jquery.js',
     './vendors/angular/angular.js',
     './vendors/angular-bootstrap/ui-bootstrap-tpls.js',
+    './vendors/bootstrap-fileinput/js/fileinput.min.js',
     './vendors/animated-checkboxes/js/svgcheckbx.js',
     './vendors/konva/konva.js',
     './vendors/seiyria-bootstrap-slider/js/bootstrap-slider.js',
