@@ -29,19 +29,20 @@
 
 			<div class="col-md-4">
 				<div class="col-md-12 topmenubar">
-				
-				<input type="file" ng-model="app.file" size="2" accept="image/*"  file-input file-changed="app.dataChanged()">
-                <br>
+					<div id="inputImage">
+						<input  type="file" ng-model="app.file" accept="image/*"  file-input file-changed="app.dataChanged()">
+					</div>
+             		
 				
 			
-					<div class="btn-group">
-						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'" >SVG</label>
+					<div id="visibleLayerRadio" class="btn-group">
+						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'">SVG</label>
 						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'" >IMG</label>
 						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'ALL'" >ALL</label>
 					</div>
 
 				
-				
+				<hr>
 				</div>
 				<form >					
 					<div class="row">
