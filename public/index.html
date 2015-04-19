@@ -17,15 +17,32 @@
 	<div class="container-fluid">
 		<div class="row-fluid ">
 			<div class="col-md-8">
-				<input id="input-id" type="file" class="file" data-preview-file-type="text" >
-				<input type="file" ng-model="app.file" file-input file-changed="app.dataChanged()">
+				
+				
 				<konva stage="app.stage" color-picker></konva>
 				<div id="container"></div>
 
-
+			
+	
+			
 			</div>
 
 			<div class="col-md-4">
+				<div class="col-md-12 topmenubar">
+				
+				<input type="file" ng-model="app.file" size="2" accept="image/*"  file-input file-changed="app.dataChanged()">
+                <br>
+				
+			
+					<div class="btn-group">
+						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'" >SVG</label>
+						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'" >IMG</label>
+						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'ALL'" >ALL</label>
+					</div>
+
+				
+				
+				</div>
 				<form >					
 					<div class="row">
 						<div class="col-md-6">
@@ -97,6 +114,7 @@
 				
 
 						</div>	
+					
 							<ul class="cbp-vimenu">
 								<li><a href="#" class="icon-logo">Logo</a></li>
 								<li><a href="#" class="icon-archive">Archive</a></li>
@@ -112,11 +130,7 @@
 					</form>
 
 				</div>
-				<div class="btn-group">
-					<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'" >SVG</label>
-					<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'" >IMG</label>
-					<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'ALL'" >ALL</label>
-				</div>
+				
 
 				<button type="button" ng-click="app.dataChanged()" class="btn btn-success">Success</button>
 

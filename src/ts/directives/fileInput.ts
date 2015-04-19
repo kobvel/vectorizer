@@ -14,6 +14,14 @@
         fileChanged: '&'
       },
       link: function(scope, element, attrs, ngModel) {
+        console.log(element);
+        element.fileinput({
+          showPreview: false,
+          showRemove: false,
+          showUpload: false,       
+          browseClass: 'btn btn-success',
+          browseLabel: 'Pick Image'
+          });
 
         element.on('change', handleChange);
 

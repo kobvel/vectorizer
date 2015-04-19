@@ -10,7 +10,7 @@
   
   function AppController(Uploader, Loader, Stage, $scope) {
     var self = this;
-    var a: number = 3;
+   
     angular.extend(self, {
       stage: Stage,
       loader: Loader,
@@ -48,7 +48,7 @@
     }
 
     function changeVisibleLayer() {
-      console.log(self.visibleLayer);
+      
       if (self.visibleLayer === 'SVG') {
         self.stage.svgLayer.visible(true);
         self.stage.imageLayer.visible(false);
