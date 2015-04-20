@@ -48,7 +48,7 @@
 
 
           var pixelColor = 'rgba(' + pixel[0] + ', ' + pixel[1] + ', ' + pixel[2] + ', ' + pixel[3] + ')';
-          scope.app.input[scope.picker] = pixelColor;
+          scope.app.Params.input[scope.picker] = pixelColor;
           scope.$apply();
 
         };
@@ -62,7 +62,7 @@
 
 
           var dColor = pixel[2] + 256 * pixel[1] + 65536 * pixel[0];
-          scope.app.input[scope.picker] = '#' + dColor.toString(16);
+          scope.app.Params.input[scope.picker] = '#' + dColor.toString(16);
           scope.$apply();
 
           canvas.unbind('click', setClickHandler);

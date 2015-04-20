@@ -12,6 +12,7 @@
   background: #fff;
 }
 
+
 .cbp-vimenu li a {
   display: block;
   text-indent: -500em;
@@ -36,6 +37,7 @@
 
 /* class for current item */
 .cbp-vimenu li.cbp-vicurrent a {
+  font-size: 150%;
   background: #f7f7f7;
   color: #000;
   border-right: @bordermine;
@@ -61,16 +63,17 @@
 
 .cbp-vimenu li a.icon-save:before {
   content:  "\f0c7";
-  font-size: 300%;
- 
+
 }
 
 .icon-share:before {
   content: "\f1e0";
+
 }
 
 .icon-edit:before {
   content: "\f044";
+
 }
 
 .icon-params:before {
@@ -91,6 +94,10 @@
 
 .icon-filter:before {
   content: "\f1c5";
+}
+
+.icon-comment:before {
+  content: "\f075";
 }
 
 /* Example for media query (depends on total height of menu) */

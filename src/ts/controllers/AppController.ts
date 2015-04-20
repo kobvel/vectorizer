@@ -6,11 +6,25 @@
     .module('Vectorizer.controllers')
     .controller('AppController', AppController);
 
-  AppController.$inject = ['Uploader', 'Loader', 'Stage', '$scope'];
+  AppController.$inject = ['Uploader', 'Loader', 'Stage', '$scope', 'Params'];
   
-  function AppController(Uploader, Loader, Stage, $scope) {
+  function AppController(Uploader, Loader, Stage, $scope, Params) {
     var self = this;
-   
+    var tabs1 = [
+      { icon: 'icon-save', text: 'Save' },
+      { icon: 'icon-share', text: 'Share' }
+    ];
+    var tabs2 = 
+      [
+      { icon: 'icon-edit', text: 'Edit' },
+      { icon: 'icon-params', text: 'Params' },
+      { icon: 'icon-filter', text: 'Filter' },
+      { icon: 'icon-user', text: 'User' },
+      { icon: 'icon-info', text: 'Info' },
+      { icon: 'icon-docs', text: 'Docs' },
+      { icon: 'icon-comment', text: 'Comment'}      
+    ];
+
     angular.extend(self, {
       stage: Stage,
       loader: Loader,
@@ -21,18 +35,11 @@
       changeToggleCollapse: changeToggleCollapse,
       visibleLayer: null,
       isCollapsed: true,
-      gamma: 0.5,
-      input: {
-        turdsize: 2,
-        alphamax: 1,
-        turnpolicy: 'minority',
-        opttolerance: 0.2,
-        color: '#000000',
-        fillcolor: '#FFFFFF',
-        invert: false,
-        tight: false
-      },
-      turnpolicy: ['minority', 'majority', 'black', 'white', 'left', 'right', 'random']
+      Params: Params,
+      tabs1: tabs1,
+      tabs2: tabs2,
+      currentTab1: tabs1[0],
+      currentTab2: tabs2[0]
     });
 
     function pickColor($event, model) {
@@ -66,8 +73,8 @@
       var promise = Uploader
         .getFileData(self.file)
         .then(function getDataSuccess(fileData) {
-          fileData.append('params', JSON.stringify(self.input));
-          fileData.append('gamma', JSON.stringify(self.gamma));
+          fileData.append('params', JSON.stringify(Params.input));
+          fileData.append('gamma', JSON.stringify(Params.gamma));
           console.log(fileData);
           uploadImageData(fileData);
         }, function getDataError(reason) {

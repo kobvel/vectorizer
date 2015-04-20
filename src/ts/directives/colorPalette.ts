@@ -41,13 +41,13 @@ declare var ColorThief:any;
         }
 
         function bindMouseMove(e) {
-          scope.app.input[scope.picker] = colorToHex($(this).css('background-color'));
+          scope.app.Params.input[scope.picker] = colorToHex($(this).css('background-color'));
           scope.$apply();
 
         };
 
         function setClickHandler(e) {
-          scope.app.input[scope.picker] = colorToHex($(this).css('background-color'));
+          scope.app.Params.input[scope.picker] = colorToHex($(this).css('background-color'));
           scope.$apply();
 
           elements.unbind('click', setClickHandler);

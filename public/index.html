@@ -40,10 +40,10 @@
 
 						<form >	
 
-							<div id="paramscontainer" class="container-fluid">
+							<div id="paramscontainer" class="container-fluid" ng-show="app.currentTab2.text=='Filter'">
 								<div class="col-md-6">
 									<div class="form-group">
-										<input type="number" ng-model="app.gamma" min="0" max="1" step="0.01"> <label>Black Level</label>
+										<input type="number" ng-model="app.Params.gamma" min="0" max="1" step="0.01"> <label>Black Level</label>
 									</div>
 									<div>
 										<button class="btn btn-default" ng-click="app.changeToggleCollapse()">Show params</button>
@@ -52,19 +52,19 @@
 											<div class="well well-lg">
 
 												<div class="form-group">
-													<input type="number" ng-model="app.input.turdsize" min="0" max="100" step="0.1">Turdsizasde
+													<input type="number" ng-model="app.Params.input.turdsize" min="0" max="100" step="0.1">Turdsizasde
 												</div>
 
 												<div class="form-group">
-													<input type="number" ng-model="app.input.alphamax" min="0.01" max="100" step="0.01">Alphamax 
+													<input type="number" ng-model="app.Params.input.alphamax" min="0.01" max="100" step="0.01">Alphamax 
 												</div>
 
 												<div class="form-group">
-													<input type="number" ng-model="app.input.opttolerance" min="0.01" max="100" step="0.01">Opttolerance 	
+													<input type="number" ng-model="app.Params.input.opttolerance" min="0.01" max="100" step="0.01">Opttolerance 	
 												</div>
 
 												<div class="form-group">
-													<select class="form-control" ng-options="item for item in app.turnpolicy" ng-model="app.input.turnpolicy">
+													<select class="form-control" ng-options="item for item in app.Params.turnpolicy" ng-model="app.Params.input.turnpolicy">
 													</select>
 												</div>	
 
@@ -78,8 +78,8 @@
 										<section>
 											<div class="ac-custom ac-checkbox ac-boxfill" autocomplete="off" >								
 												<ul>
-													<li><input ng-model="app.input.tight" type="checkbox"><label >Tight</label></li>
-													<li><input ng-model="app.input.invert" type="checkbox"><label >Invert</label></li>		
+													<li><input ng-model="app.Params.input.tight" type="checkbox"><label >Tight</label></li>
+													<li><input ng-model="app.Params.input.invert" type="checkbox"><label >Invert</label></li>		
 												</ul>
 											</div>
 										</section>		
@@ -89,15 +89,15 @@
 
 								<div class="col-md-4">							
 
-									<div id ="color-preview-bg" ng-style="{'background-color': app.input.color}" ng-click="app.pickColor($event,'color')">
+									<div id ="color-preview-bg" ng-style="{'background-color': app.Params.input.color}" ng-click="app.pickColor($event,'color')">
 										<i class="fa fa-paint-brush fa-5x"></i>
 									</div>
-									<input ng-model="app.input.color" type="text"  name="color" size="7">		
+									<input ng-model="app.Params.input.color" type="text"  name="color" size="7">		
 									
 
 
-									<div  id ="color-preview-fill" ng-style="{'background-color': app.input.fillcolor}" ng-click="app.pickColor($event,'fillcolor')"><i class="fa fa-tint fa-5x "></i></div>
-									<input ng-model="app.input.fillcolor" type="text" name="fillcolor" size="7">
+									<div  id ="color-preview-fill" ng-style="{'background-color': app.Params.input.fillcolor}" ng-click="app.pickColor($event,'fillcolor')"><i class="fa fa-tint fa-5x "></i></div>
+									<input ng-model="app.Params.input.fillcolor" type="text" name="fillcolor" size="7">
 
 									<div class="row">
 										<div class="col-md-12">									
@@ -113,15 +113,13 @@
 								<button type="button" ng-click="app.dataChanged()" class="btn btn-success">Success</button>	
 							</div>	
 						</form>
-						<ul class="cbp-vimenu">
-							<li class="cbp-vicurrent "><a class="icon-save">Save</a></li>
-							<li class="cbp-vicurrent"><a class="icon-share">Share</a></li>
-							<li><a class="icon-edit">Edit</a></li>
-							<li><a class="icon-params">Params</a></li>			
-							<li class="cbp-vicurrent"><a class="icon-filter">Filter</a></li>
-							<li><a class="icon-user">User</a></li>
-							<li><a class="icon-info">Info</a></li>
-							<li><a class="icon-docs">Docs</a></li>
+						<ul class="cbp-vimenu" >
+							<li ng-repeat="tab in app.tabs1" ng-class="{'cbp-vicurrent': app.currentTab1 == tab}">
+								<a class="{{tab.icon}}" ng-click="app.currentTab1 = tab">{{tab.text}}</a>
+							</li>
+							<li ng-repeat="tab in app.tabs2" ng-class="{'cbp-vicurrent': app.currentTab2 == tab}">
+								<a class="{{tab.icon}}" ng-click="app.currentTab2 = tab">{{tab.text}}</a>
+							</li>
 						</ul>
 
 					</div>		
