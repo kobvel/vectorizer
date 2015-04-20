@@ -1,4 +1,4 @@
-
+@bordermine: 2px solid black;
 
 .cbp-vimenu {
   position: fixed;
@@ -9,18 +9,19 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-  background: #f7f7f7;
+  background: #fff;
 }
 
 .cbp-vimenu li a {
   display: block;
   text-indent: -500em;
-  height: 5em;
-  width:5em;
-  line-height: 5em;
+  height: 70px;
+  width: 70px;
+  line-height: 70px;
   text-align: center;
   color: #999;
   position: relative;
+  border-left: @bordermine;
   border-bottom: 1px solid rgba(0,0,0,0.05);
   -webkit-transition: background 0.1s ease-in-out;
   -moz-transition: background 0.1s ease-in-out;
@@ -30,12 +31,17 @@
 .cbp-vimenu li a:hover{
   background: #000;
   color: #fff;
+
 }
 
 /* class for current item */
 .cbp-vimenu li.cbp-vicurrent a {
-  background: #fff;
+  background: #f7f7f7;
   color: #000;
+  border-right: @bordermine;
+  border-bottom: @bordermine;
+  border-top: @bordermine;
+  border-left: none;
 }
 
 .cbp-vimenu li a:before {
@@ -55,7 +61,6 @@
 
 .cbp-vimenu li a.icon-save:before {
   content:  "\f0c7";
-  font-weight: 700;
   font-size: 300%;
  
 }

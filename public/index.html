@@ -1,142 +1,134 @@
-<!DOCTYPE html>
-<html ng-app="Vectorizer">
+	<!DOCTYPE html>
+	<html ng-app="Vectorizer">
 
-<head>
-	<title>Vectorization by Kbl</title>
-	<link rel="stylesheet" type="text/css" href="css/app.css">
-</head>
+	<head>
+		<title>Vectorization by Kbl</title>
+		<link rel="stylesheet" type="text/css" href="css/app.css">
+	</head>
 
-<body ng-controller="AppController as app">
-	<div class="loader" ng-if="app.loader.isLoading">
-		<div class="spinner">
-			<div class="dot1"></div>
-			<div class="dot2"></div>
-		</div>
-	</div>	
-
-	<div class="container-fluid">
-		<div class="row-fluid ">
-			<div class="col-md-8">
-				
-				
-				<konva stage="app.stage" color-picker></konva>
-				<div id="container"></div>
-
-			
-	
-			
+	<body ng-controller="AppController as app">
+		<div class="loader" ng-if="app.loader.isLoading">
+			<div class="spinner">
+				<div class="dot1"></div>
+				<div class="dot2"></div>
 			</div>
+		</div>	
 
-			<div class="col-md-4" id="navpanelprop">
-				<div class="col-md-12 topmenubar">
-					<div id="inputImage">
-						<input  type="file" ng-model="app.file" accept="image/*"  file-input file-changed="app.dataChanged()">
-					</div>
-             		
-				
-			
-					<div id="visibleLayerRadio" class="btn-group">
-						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'">SVG</label>
-						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'" >IMG</label>
-						<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'ALL'" >ALL</label>
-					</div>
-
-				
-				
+		<div class="container-fluid">
+			<div class="row-fluid ">
+				<div class="col-md-8">	
+					<konva stage="app.stage" color-picker></konva>
+					<div id="container"></div>			
 				</div>
 
-				<form >					
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<input type="number" ng-model="app.gamma" min="0" max="1" step="0.01"> <label>Black Level</label>
-							</div>
-							<div>
-								<button class="btn btn-default" ng-click="app.changeToggleCollapse()">Show params</button>
-								<hr>
-								<div collapse="app.isCollapsed" >
-									<div class="well well-lg">
-										
-										<div class="form-group">
-											<input type="number" ng-model="app.input.turdsize" min="0" max="100" step="0.1">Turdsizasde
-										</div>
+				<div class="col-md-4" id="navpanelprop">
+					<div class="col-md-12">
 
-										<div class="form-group">
-											<input type="number" ng-model="app.input.alphamax" min="0.01" max="100" step="0.01">Alphamax 
-										</div>
-
-										<div class="form-group">
-											<input type="number" ng-model="app.input.opttolerance" min="0.01" max="100" step="0.01">Opttolerance 	
-										</div>
-
-										<div class="form-group">
-											<select class="form-control" ng-options="item for item in app.turnpolicy" ng-model="app.input.turnpolicy">
-											</select>
-										</div>	
-
-									</div> 
-								</div>
-							</div>
+						<div class="topmenubar">
+							<div id="inputImage">
+								<input  type="file" ng-model="app.file" accept="image/*"  file-input file-changed="app.dataChanged()">
+							</div>           		
 
 
-							
-							<div>			
-								<section>
-									<div class="ac-custom ac-checkbox ac-boxfill" autocomplete="off" >								
-										<ul>
-											<li><input ng-model="app.input.tight" type="checkbox"><label >Tight</label></li>
-											<li><input ng-model="app.input.invert" type="checkbox"><label >Invert</label></li>		
-										</ul>
-									</div>
-								</section>		
-							</div>
-							
+							<div id="visibleLayerRadio" class="btn-group">
+								<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'">SVG</label>
+								<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'" >IMG</label>
+								<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'ALL'" >ALL</label>
+							</div>	
+
 						</div>
 
-						<div class="col-md-4">							
-														
-								<div id ="color-preview-bg" ng-style="{'background-color': app.input.color}" ng-click="app.pickColor($event,'color')">
-								<i class="fa fa-paint-brush fa-5x"></i></div>
-								<input ng-model="app.input.color" type="text"  name="color" size="7">		
-								
-							
+						<form >	
 
-								<div  id ="color-preview-fill" ng-style="{'background-color': app.input.fillcolor}" ng-click="app.pickColor($event,'fillcolor')"><i class="fa fa-tint fa-5x "></i></div>
-								<input ng-model="app.input.fillcolor" type="text" name="fillcolor" size="7">
+							<div id="paramscontainer" class="container-fluid">
+								<div class="col-md-6">
+									<div class="form-group">
+										<input type="number" ng-model="app.gamma" min="0" max="1" step="0.01"> <label>Black Level</label>
+									</div>
+									<div>
+										<button class="btn btn-default" ng-click="app.changeToggleCollapse()">Show params</button>
+										<hr>
+										<div collapse="app.isCollapsed" >
+											<div class="well well-lg">
 
-							<div class="row">
-								<div class="col-md-12">									
-									<div class="row">
-										<div class="swatches" >											
-											<color-palette></color-palette>
+												<div class="form-group">
+													<input type="number" ng-model="app.input.turdsize" min="0" max="100" step="0.1">Turdsizasde
+												</div>
+
+												<div class="form-group">
+													<input type="number" ng-model="app.input.alphamax" min="0.01" max="100" step="0.01">Alphamax 
+												</div>
+
+												<div class="form-group">
+													<input type="number" ng-model="app.input.opttolerance" min="0.01" max="100" step="0.01">Opttolerance 	
+												</div>
+
+												<div class="form-group">
+													<select class="form-control" ng-options="item for item in app.turnpolicy" ng-model="app.input.turnpolicy">
+													</select>
+												</div>	
+
+											</div> 
 										</div>
-									</div>									
+									</div>
+
+
+
+									<div>			
+										<section>
+											<div class="ac-custom ac-checkbox ac-boxfill" autocomplete="off" >								
+												<ul>
+													<li><input ng-model="app.input.tight" type="checkbox"><label >Tight</label></li>
+													<li><input ng-model="app.input.invert" type="checkbox"><label >Invert</label></li>		
+												</ul>
+											</div>
+										</section>		
+									</div>
+
 								</div>
-							</div>
-				
 
-						</div>	
+								<div class="col-md-4">							
+
+									<div id ="color-preview-bg" ng-style="{'background-color': app.input.color}" ng-click="app.pickColor($event,'color')">
+										<i class="fa fa-paint-brush fa-5x"></i>
+									</div>
+									<input ng-model="app.input.color" type="text"  name="color" size="7">		
+									
+
+
+									<div  id ="color-preview-fill" ng-style="{'background-color': app.input.fillcolor}" ng-click="app.pickColor($event,'fillcolor')"><i class="fa fa-tint fa-5x "></i></div>
+									<input ng-model="app.input.fillcolor" type="text" name="fillcolor" size="7">
+
+									<div class="row">
+										<div class="col-md-12">									
+											<div class="row">
+												<div class="swatches" >											
+													<color-palette></color-palette>
+												</div>
+											</div>									
+										</div>
+									</div>
+								</div>	
+
+								<button type="button" ng-click="app.dataChanged()" class="btn btn-success">Success</button>	
+							</div>	
+						</form>
+						<ul class="cbp-vimenu">
+							<li class="cbp-vicurrent "><a class="icon-save">Save</a></li>
+							<li class="cbp-vicurrent"><a class="icon-share">Share</a></li>
+							<li><a class="icon-edit">Edit</a></li>
+							<li><a class="icon-params">Params</a></li>			
+							<li class="cbp-vicurrent"><a class="icon-filter">Filter</a></li>
+							<li><a class="icon-user">User</a></li>
+							<li><a class="icon-info">Info</a></li>
+							<li><a class="icon-docs">Docs</a></li>
+						</ul>
+
+					</div>		
 					
-							<ul class="cbp-vimenu">
-								<li><a href="#" class="icon-save">Logo</a></li>
-								<li><a href="#" class="icon-share">Archive</a></li>
-								<li><a href="#" class="icon-edit">Search</a></li>
-								<li><a href="#" class="icon-params">Pencil</a></li>			
-								<li class="cbp-vicurrent"><a href="#" class="icon-filter">Filter</a></li>
 
-								<li><a href="#" class="icon-user">Location</a></li>
-								<li><a href="#" class="icon-info">Images</a></li>
-								<li><a href="#" class="icon-docs">Download</a></li>
-							</ul>
-						
-					</form>
 
 				</div>
-				
-
-				<button type="button" ng-click="app.dataChanged()" class="btn btn-success">Success</button>
-
-
 			</div>
 		</div>
 	</div>
