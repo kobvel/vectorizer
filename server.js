@@ -31,7 +31,7 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
   var gammaData = req.body.gamma;
   var paramsTypes = ['turdsize', 'alphamax', 'opttolerance', 'turnpolicy', 'color', 'fillcolor', 'tight', 'invert'];
   var jsonparam = paramsData ? JSON.parse(paramsData) : {};
-
+  var imagesrc = req.body.imagesrc;
   var match = base64Data.match(/data:image\/(.+);base64,(.+)/);
   var image = {};
 
@@ -39,8 +39,13 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
   image.ext = "." + (match[1] == 'jpeg' ? 'jpg' : match[1]);
   image.name = (new Date).getTime();
   image.publicPath = './public' + image.dir;
-  image.srcPath = image.publicPath + image.name + image.ext;
+  image.srcPath = imagesrc ? (image.publicPath + imagesrc) : (image.publicPath + image.name + image.ext);
   image.path = image.publicPath + image.name;
+
+  var jpgImage = imagesrc ? imagesrc : (image.name + image.ext);
+
+
+  var bmp = image.path + '.bmp';
 
 
   async.waterfall([
@@ -59,7 +64,7 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
           });
       },
       function convertImgBMP(callback) {
-        var bmp = image.path + '.bmp';
+
         var child = exec('convert ' + image.srcPath + ' ' + bmp,
           function(error, stdout, stderr) {
 
@@ -128,9 +133,11 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
       console.log('done');
 
       res.send({
-        image: image.dir + image.name + image.ext,
+        image: image.dir + jpgImage,
         svg: image.dir + image.name + '.svg',
         pbm: image.dir + image.name + '.bmp'
+
+
       });
     });
 });

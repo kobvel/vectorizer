@@ -31,6 +31,7 @@
       file: null,
       pickColor: pickColor,
       dataChanged: dataChanged,
+      processExistingImage: processExistingImage,
       changeVisibleLayer: changeVisibleLayer,
       changeToggleCollapse: changeToggleCollapse,
       visibleLayer: null,
@@ -55,7 +56,7 @@
     }
 
     function changeVisibleLayer() {
-      
+      console.log(self.file);
       if (self.visibleLayer === 'SVG') {
         self.stage.svgLayer.visible(true);
         self.stage.imageLayer.visible(false);
@@ -69,6 +70,7 @@
       }
     }
 
+   
     function dataChanged() {
       var promise = Uploader
         .getFileData(self.file)
@@ -81,6 +83,21 @@
           console.log(reason);
         });
     };
+
+    function processExistingImage() {
+      var promise = Uploader
+        .getFileData(self.file)
+        .then(function getDataSuccess(data) {                   
+          data.append('imagesrc', Stage.imagePath);
+          data.append('params', JSON.stringify(Params.input));
+          data.append('gamma', JSON.stringify(Params.gamma));
+          console.log(data);
+          uploadImageData(data);
+        }, function getDataError(reason) {
+          console.log(reason);
+        });
+    };
+
 
     function uploadImageData(fd) {
       Loader.loading(true);

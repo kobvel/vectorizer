@@ -88,7 +88,6 @@ declare var ColorThief:any;
           var colorThief:any = new ColorThief();
           var palette = colorThief.getPalette(imageObj);
           scope.palette = palette;
-          console.log(palette);
         }
       }
     };

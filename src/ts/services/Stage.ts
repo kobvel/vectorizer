@@ -17,7 +17,8 @@ declare var Konva:any;
       loadData: loadData,
       image: null,
       svg: null,
-      pbm: null
+      pbm: null,
+      imagePath: null
     };
 
     function loadData(data) {
@@ -44,8 +45,13 @@ declare var Konva:any;
 
       imageObj.onload = function() {
         var scale = self.offsetWidth / imageObj.width;
-        console.log(self.offsetWidth);
-        console.log(scale, imageObj.width, imageObj.height);
+          
+        if (imageObj) {
+          
+          var imagepath = imageObj.src.split('/')[4];
+          self.imagePath = imagepath;
+        }
+          
 
         self.image = new Konva.Image({
           x: 0,
@@ -54,7 +60,7 @@ declare var Konva:any;
           width: imageObj.width * scale,
           height: imageObj.height * scale
         });
-     
+       
         stage.width(imageObj.width * scale);
         stage.height(imageObj.height * scale);
 

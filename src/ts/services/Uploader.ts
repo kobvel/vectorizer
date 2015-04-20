@@ -14,6 +14,15 @@
       getFileData: getFileData
     };
 
+    function uploadParams(data) {
+      return $http.get('/api/photo/', data, {
+        transformRequest: angular.identity,
+        headers: {
+          'Content-Type': undefined
+        }
+      });
+    }
+
     function upload(data) {
       return $http.post('/api/photo/', data, {
         transformRequest: angular.identity,
