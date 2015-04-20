@@ -81,20 +81,6 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
             callback(null);
           });
       },
-      function convertImgPBM(callback) {
-        var bmp = image.path + '.bmp';
-        var pbm = image.path + '.pbm';
-        var child = exec('convert ' + pbm + ' ' + bmp,
-          function(error, stdout, stderr) {
-
-            if (error) {
-              callback(error);
-            }
-
-            callback(null);
-          });
-      },
-
       function processImg(callback) {
         var svg = image.path + '.svg';
         var pbm = image.path + '.pbm';

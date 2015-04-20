@@ -29,7 +29,7 @@
       var imageData;
 
       fr.onload = function(e) {
-        console.log(e.target);
+        
         imageData = e.target.result;
         var fd = new FormData;
 

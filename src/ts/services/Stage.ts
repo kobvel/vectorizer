@@ -41,8 +41,12 @@ declare var Konva:any;
       var svgObj = new Image();
       var pbmObj = new Image();
 
+
       imageObj.onload = function() {
         var scale = self.offsetWidth / imageObj.width;
+        console.log(self.offsetWidth);
+        console.log(scale, imageObj.width, imageObj.height);
+
         self.image = new Konva.Image({
           x: 0,
           y: 0,
@@ -50,9 +54,9 @@ declare var Konva:any;
           width: imageObj.width * scale,
           height: imageObj.height * scale
         });
-
-        stage.width(imageObj.width);
-        stage.height(imageObj.height);
+     
+        stage.width(imageObj.width * scale);
+        stage.height(imageObj.height * scale);
 
         imageLayer.add(self.image);
         imageLayer.draw();

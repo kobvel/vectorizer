@@ -55,7 +55,7 @@ declare var ColorThief:any;
         };
 
          function colorToHex(color) {
-          console.log(color);
+         
           if (color.substr(0, 1) === '#') {
             return color;
           }
