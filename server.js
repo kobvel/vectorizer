@@ -5,7 +5,9 @@ var app = express();
 var fs = require('fs');
 var methodOverride = require('method-override');
 var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
+var multipartMiddleware = multipart({
+  limit: '20mb'
+});
 var async = require('async');
 var sizeOf = require('image-size');
 var exec = require('child_process').exec;
@@ -112,19 +114,6 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
           callback(null);
         });
 
-      },
-      function resizeImg(callback) {
-        var resize = image.path + '_resized' + image.ext;
-
-        var child = exec('convert ' + image.srcPath + ' -resize 1024x700 ' + resize,
-          function(error, stdout, stderr) {
-
-            if (error) {
-              callback(error);
-            }
-
-            callback(null);
-          });
       }
     ],
     function(err) {
@@ -139,7 +128,7 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
       console.log('done');
 
       res.send({
-        image: image.dir + image.name + '_resized' + image.ext,
+        image: image.dir + image.name + image.ext,
         svg: image.dir + image.name + '.svg',
         pbm: image.dir + image.name + '.bmp'
       });
