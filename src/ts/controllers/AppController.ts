@@ -85,17 +85,12 @@
     };
 
     function processExistingImage() {
-      var promise = Uploader
-        .getFileData(self.file)
-        .then(function getDataSuccess(data) {                   
+      var data = new FormData;                  
           data.append('imagesrc', Stage.imagePath);
           data.append('params', JSON.stringify(Params.input));
           data.append('gamma', JSON.stringify(Params.gamma));
-          console.log(data);
-          uploadImageData(data);
-        }, function getDataError(reason) {
-          console.log(reason);
-        });
+          console.log(data);    
+          uploadImageData(data);       
     };
 
 

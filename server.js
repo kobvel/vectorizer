@@ -32,11 +32,12 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
   var paramsTypes = ['turdsize', 'alphamax', 'opttolerance', 'turnpolicy', 'color', 'fillcolor', 'tight', 'invert'];
   var jsonparam = paramsData ? JSON.parse(paramsData) : {};
   var imagesrc = req.body.imagesrc;
-  var match = base64Data.match(/data:image\/(.+);base64,(.+)/);
+  var match = (base64Data) ? base64Data.match(/data:image\/(.+);base64,(.+)/) : null;
   var image = {};
 
+
   image.dir = '/uploads/';
-  image.ext = "." + (match[1] == 'jpeg' ? 'jpg' : match[1]);
+  image.ext = imagesrc ? ("." + imagesrc.match(/\.([0-9a-z]+)(?:[\?#]|$)/)) : "." + (match[1] == 'jpeg' ? 'jpg' : match[1]);
   image.name = (new Date).getTime();
   image.publicPath = './public' + image.dir;
   image.srcPath = imagesrc ? (image.publicPath + imagesrc) : (image.publicPath + image.name + image.ext);
@@ -44,24 +45,26 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
 
   var jpgImage = imagesrc ? imagesrc : (image.name + image.ext);
 
-
   var bmp = image.path + '.bmp';
 
 
   async.waterfall([
 
       function moveFile(callback) {
+        if (match) {
+          fs.writeFile(
+            image.srcPath,
+            new Buffer(match[2].replace(/ /g, '+'), 'base64'),
+            function(error) {
+              if (error) {
+                callback(error);
+              };
 
-        fs.writeFile(
-          image.srcPath,
-          new Buffer(match[2].replace(/ /g, '+'), 'base64'),
-          function(error) {
-            if (error) {
-              callback(error);
-            };
-
-            callback(null);
-          });
+              callback(null);
+            });
+        } else {
+          callback(null);
+        }
       },
       function convertImgBMP(callback) {
 
