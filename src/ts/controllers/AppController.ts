@@ -7,7 +7,7 @@
     .controller('AppController', AppController);
 
   AppController.$inject = ['Uploader', 'Loader', 'Stage', '$scope', 'Params'];
-  
+ 
   function AppController(Uploader, Loader, Stage, $scope, Params) {
     var self = this;
     var tabs1 = [
