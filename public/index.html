@@ -29,9 +29,10 @@
 							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'">SVG</label>
 							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'" >IMG</label>
 							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'ALL'" >ALL</label>
+							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'PBM'" >PBM</label>
 						</div>	
 					</div>
-					<konva id="konvastage" stage="app.stage" color-picker></konva>
+					<konva id="konvastage" stage="app.stage" color-picker image-editor></konva>
 					<div id="container"></div>			
 				</div>
 
@@ -58,7 +59,10 @@
 						
 
 						<form >	
+							<div ng-show="app.currentTab2.text=='Edit'">
+								<button ng-click="app.editImage($event)">Pencil</button>
 
+							</div>
 							<div id="paramscontainer" class="container-fluid" ng-show="app.currentTab2.text=='Params'">
 								<div class="col-md-6">
 									<div class="form-group">

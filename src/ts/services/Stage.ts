@@ -14,6 +14,7 @@ declare var Konva:any;
       stage: {},
       imageLayer: null,
       svgLayer: null,
+      pbmLayer: null,
       loadData: loadData,
       image: null,
       svg: null,

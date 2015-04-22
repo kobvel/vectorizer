@@ -35,6 +35,7 @@
           canvas.bind('mousemove', bindMouseMove);
           canvas.bind('click', setClickHandler);
           ctx = canvas[0].getContext('2d');
+          
         };
 
         function bindMouseMove(e) {
