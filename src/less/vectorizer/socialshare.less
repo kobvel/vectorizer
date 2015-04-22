@@ -1,7 +1,135 @@
 #socialshare {	
 	height: 140px;
-	width: 100%;
-	padding-top: 15px;
+	width: 88%;
+	background-color: #F1EDC2;
 	border-bottom: solid;
+}
+
+#socialshare section div a:before {
+  font-family: 'FontAwesome'; 
+}
+
+a {
+	color: #ccc;
+	text-decoration: none;
+}
+#set-3 {
+	background: #F1EDC2;
+}
+
+.hi-icon-wrap {
+
+	text-align: center;
+	margin: 0 auto;
+	padding: 0.1 0 0.2;
+}
+
+.hi-icon {
+	
+	display: inline-block;
+	font-size: 0px;
+	cursor: pointer;
+	margin: 8px 15px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	text-align: center;
+	position: relative;
+	z-index: 1;
+	color: #2E2E2E;
+}
+
+.hi-icon:after {
+	pointer-events: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	content: '';
+	-webkit-box-sizing: content-box; 
+	-moz-box-sizing: content-box; 
+	box-sizing: content-box;
+}
+
+.hi-icon:before {
+	font-family: 'ecoicon';
+	speak: none;
+	font-size: 32px;
+	line-height: 50px;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	display: block;
+	-webkit-font-smoothing: antialiased;
+}
+
+
+/* Effect 3 */
+.hi-icon-effect-3 .hi-icon {
+	box-shadow: 0 0 0 4px #2E2E2E;
+	-webkit-transition: color 0.3s;
+	-moz-transition: color 0.3s;
+	transition: color 0.3s;
+}
+
+.hi-icon-effect-3 .hi-icon:after {
+	top: -2px;
+	left: -2px;
+	padding: 2px;
+	z-index: -1;
+	background: #2E2E2E;
+	-webkit-transition: -webkit-transform 0.2s, opacity 0.3s;
+	-moz-transition: -moz-transform 0.2s, opacity 0.3s;
+	transition: transform 0.2s, opacity 0.3s;
+}
+
+/* Effect 3a */
+.hi-icon-effect-3a .hi-icon {
+	color: #F1EDC2;
+}
+
+.hi-icon-effect-3a .hi-icon:hover {
+	color: #2E2E2E;
+	text-decoration: none;
+}
+
+.hi-icon-effect-3a .hi-icon:hover:after {
+	-webkit-transform: scale(1.3);
+	-moz-transform: scale(1.3);
+	-ms-transform: scale(1.3);
+	transform: scale(1.3);
+	opacity: 0;
+}
+
+.icon-fb:before {
+  content: @fa-var-facebook;
+
+}
+
+.icon-vk:before {
+  content: @fa-var-vk;
+
+}
+
+.icon-insta:before {
+  content: @fa-var-instagram; 
+}
+
+.icon-twitter:before {
+  content: @fa-var-twitter;
+}
+.icon-git:before {
+  content: @fa-var-github;
+}
+.icon-google:before {
+  content:  @fa-var-google-plus;
+}
+
+.icon-pint:before {
+  content:  @fa-var-pinterest-p;
+}
+.icon-trello:before {
+  content:   @fa-var-trello;
 }
 

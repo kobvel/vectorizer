@@ -4,6 +4,7 @@
 	<head>
 		<title>Vectorization by Kbl</title>
 		<link rel="stylesheet" type="text/css" href="css/app.css">
+		
 	</head>
 
 	<body ng-controller="AppController as app">
@@ -12,6 +13,7 @@
 				<div class="dot1"></div>
 				<div class="dot2"></div>
 			</div>
+
 		</div>	
 
 		<div class="container-fluid">
@@ -35,19 +37,23 @@
 
 				<div class="col-md-4" id="navpanelprop">
 					<div class="col-md-12 paneldiv">
-						<div id="socialshare">
-							<table>
-								<tr>
-								<td>asd s </td>
-								<td>asd  </td>
-								<td>asd  </td>
-								</tr>
-								<tr>
-								<td>asd  </td>
-								<td>asd  </td>
-								<td>asd  </td>
-								</tr>
-							</table>
+						<div id="socialshare" ng-controller="ShareController as share">
+							<section id="set-3" ng-show="app.currentTab1.text=='Share'">
+								<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
+									<a class="hi-icon icon-fb">Fb</a>
+									<a class="hi-icon icon-vk" ng-click="share.shareVk()">Vk</a>
+									<a class="hi-icon icon-twitter">Twitter</a>
+									<a class="hi-icon icon-pint">Pint</a>
+								</div>
+								<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
+									<a class="hi-icon icon-insta">Insta</a>
+									<a class="hi-icon icon-git">Git</a>
+									<a class="hi-icon icon-google">Google</a>
+									<a class="hi-icon icon-trello">Trello</a>
+								</div>
+
+							</section>
+							
 						</div>
 						
 
@@ -143,7 +149,9 @@
 			</div>
 		</div>
 	</div>
+	
 
+	
 	<script src="js/vendors.js"></script>
 	<script src="js/app.min.js"></script>
 

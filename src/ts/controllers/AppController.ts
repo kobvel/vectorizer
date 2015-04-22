@@ -1,13 +1,13 @@
 ///<reference path="../../../tools/typings/tsd.d.ts" />
 ///<reference path="../../../tools/typings/typescriptApp.d.ts" />
-
+ declare var VK:any;
 (function() {
   angular
     .module('Vectorizer.controllers')
     .controller('AppController', AppController);
 
   AppController.$inject = ['Uploader', 'Loader', 'Stage', '$scope', 'Params'];
- 
+
   function AppController(Uploader, Loader, Stage, $scope, Params) {
     var self = this;
     var tabs1 = [
@@ -54,8 +54,9 @@
     function changeToggleCollapse() {
       self.isCollapsed = !self.isCollapsed;
     }
-
+    
     function changeVisibleLayer() {
+
       console.log(self.file);
       if (self.visibleLayer === 'SVG') {
         self.stage.svgLayer.visible(true);

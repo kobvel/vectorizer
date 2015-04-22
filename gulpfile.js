@@ -32,7 +32,9 @@ var vendors = {
     './vendors/seiyria-bootstrap-slider/js/bootstrap-slider.js',
     './vendors/angular-bootstrap-slider/slider.js',
     './vendors/menu/js/modernizr.custom.js',
-    './vendors/color-thief/src/color-thief.js'
+    './vendors/color-thief/src/color-thief.js',
+    './vendors/api-vendors/vk.js'
+
   ]
 }
 
