@@ -38,6 +38,7 @@
     "gulp-inject": "~1.2.0",
     "gulp-tslint": "~2.0.0",
     "gulp-rimraf": "~0.1.1",
-    "tsd": "~0.5.7"
+    "tsd": "~0.5.7",
+    "object-sizeof": "~1.0.4"
   }
 }

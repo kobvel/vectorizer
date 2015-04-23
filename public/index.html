@@ -32,7 +32,7 @@
 							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'PBM'" >PBM</label>
 						</div>	
 					</div>
-					<konva id="konvastage" stage="app.stage" color-picker image-editor></konva>
+					<konva id="konvastage" stage="app.stage" color-picker></konva>
 					<div id="container"></div>			
 				</div>
 
@@ -59,8 +59,12 @@
 						
 
 						<form >	
-							<div ng-show="app.currentTab2.text=='Edit'">
-								<button ng-click="app.editImage($event)">Pencil</button>
+							<div ng-show="app.currentTab2.text=='Edit'" ng-controller="EditorController as edit">
+								<button ng-click="edit.editImage($event)">Pencil</button>
+								<button ng-click="edit.stopEdit($event)">Stop Drawing</button>
+								<button ng-click="edit.clearArea($event)">Clear Area</button>
+								<button ng-click="edit.cUndo($event)">Undo</button>
+								<button ng-click="edit.cRedo($event)">Redo</button>
 
 							</div>
 							<div id="paramscontainer" class="container-fluid" ng-show="app.currentTab2.text=='Params'">
@@ -112,14 +116,14 @@
 
 								<div class="col-md-4">							
 
-									<div id ="color-preview-bg" ng-style="{'background-color': app.Params.input.color}" ng-click="app.pickColor($event,'color')">
+									<div id ="color-preview-bg" ng-style="{'background-color': app.Params.input.color}" ng-click="app.broadcast.pickColor($event,'color')">
 										<i class="fa fa-paint-brush fa-5x"></i>
 									</div>
 									<input ng-model="app.Params.input.color" type="text"  name="color" size="7">		
 									
 
 
-									<div  id ="color-preview-fill" ng-style="{'background-color': app.Params.input.fillcolor}" ng-click="app.pickColor($event,'fillcolor')"><i class="fa fa-tint fa-5x "></i></div>
+									<div  id ="color-preview-fill" ng-style="{'background-color': app.Params.input.fillcolor}" ng-click="app.broadcast.pickColor($event,'fillcolor')"><i class="fa fa-tint fa-5x "></i></div>
 									<input ng-model="app.Params.input.fillcolor" type="text" name="fillcolor" size="7">
 
 									<div class="row">

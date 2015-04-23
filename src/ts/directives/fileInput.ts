@@ -14,7 +14,7 @@
         fileChanged: '&'
       },
       link: function(scope, element, attrs, ngModel) {
-        console.log(element);
+       
         element.fileinput({
           showPreview: false,
           showRemove: false,

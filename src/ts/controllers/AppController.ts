@@ -1,14 +1,15 @@
 ///<reference path="../../../tools/typings/tsd.d.ts" />
 ///<reference path="../../../tools/typings/typescriptApp.d.ts" />
 declare var VK:any;
+
 (function() {
   angular
   .module('Vectorizer.controllers')
   .controller('AppController', AppController);
 
-  AppController.$inject = ['Uploader', 'Loader', 'Stage', '$scope', 'Params'];
+  AppController.$inject = ['Uploader', 'Loader', 'Stage', 'BroadcastService', 'Params'];
 
-  function AppController(Uploader, Loader, Stage, $scope, Params) {
+  function AppController(Uploader, Loader, Stage, BroadcastService, Params) {
     var self = this;
     var tabs1 = [
     { icon: 'icon-save', text: 'Save' },
@@ -28,9 +29,8 @@ declare var VK:any;
     angular.extend(self, {
       stage: Stage,
       loader: Loader,
-      file: null,
-      editImage: editImage,
-      pickColor: pickColor,
+      broadcast: BroadcastService,
+      file: null,     
       dataChanged: dataChanged,
       processExistingImage: processExistingImage,
       changeVisibleLayer: changeVisibleLayer,
@@ -44,53 +44,39 @@ declare var VK:any;
       currentTab2: tabs2[0]
       });
 
-    function pickColor($event, model) {
-      $event.stopPropagation();
-      $scope.$broadcast('setModel', {
-        model: model
-        });
-
-    };
-    function editImage($event) {
-      
-      $scope.$broadcast('editEnable', {
-        
-            });
-      
-    };
-
+    
     function changeToggleCollapse() {
       self.isCollapsed = !self.isCollapsed;
     }
     
     function changeVisibleLayer() {
-
-      switch (self.visibleLayer) {
-        case 'SVG':
-        self.stage.svgLayer.visible(true);
-        self.stage.pbmLayer.visible(false);
-        self.stage.imageLayer.visible(false);
-        break;
-        case 'IMG':
-        self.stage.svgLayer.visible(false);
-        self.stage.imageLayer.visible(true);
-        self.stage.pbmLayer.visible(false);
-        break;
-        case 'PBM':
-        self.stage.pbmLayer.visible(true);
-        self.stage.svgLayer.visible(false);
-        self.stage.imageLayer.visible(false);
-        break;
-        case 'ALL':
-        self.stage.pbmLayer.visible(false);
-        self.stage.svgLayer.visible(true);
-        self.stage.imageLayer.visible(true);
-        break;
-        default:
-        self.stage.pbmLayer.visible(false);
-        self.stage.svgLayer.visible(true);
-        self.stage.imageLayer.visible(false);  
-
+      if (self.file) {
+        switch (self.visibleLayer) {
+          case 'SVG':
+            self.stage.svgLayer.visible(true);
+            self.stage.pbmLayer.visible(false);
+            self.stage.imageLayer.visible(false);
+            break;
+          case 'IMG':
+            self.stage.svgLayer.visible(false);
+            self.stage.imageLayer.visible(true);
+            self.stage.pbmLayer.visible(false);
+            break;
+          case 'PBM':
+            self.stage.pbmLayer.visible(true);
+            self.stage.svgLayer.visible(false);
+            self.stage.imageLayer.visible(false);
+            break;
+          case 'ALL':
+            self.stage.pbmLayer.visible(false);
+            self.stage.svgLayer.visible(true);
+            self.stage.imageLayer.visible(true);
+            break;
+          default:
+            self.stage.pbmLayer.visible(false);
+            self.stage.svgLayer.visible(true);
+            self.stage.imageLayer.visible(false);
+        }
       }
     }
 
@@ -100,7 +86,6 @@ declare var VK:any;
       .then(function getDataSuccess(fileData) {
         fileData.append('params', JSON.stringify(Params.input));
         fileData.append('gamma', JSON.stringify(Params.gamma));
-        console.log(fileData);
         uploadImageData(fileData);
         }, function getDataError(reason) {
           console.log(reason);
@@ -108,7 +93,6 @@ declare var VK:any;
     };
 
     function processExistingImage() {
-
       var data = new FormData;                  
       data.append('imagesrc', Stage.imagePath);
       data.append('params', JSON.stringify(Params.input));
@@ -125,9 +109,7 @@ declare var VK:any;
       .upload(fd)
       .then(function uploadSuccess(response) {
         Stage.loadData(response.data).then(function() {
-          $scope.$broadcast('imageChanged', {
-            image: self.stage.image
-            });
+          self.broadcast.imageChanged(self.stage.image);
           });
         }, function uploadError(reason) {
           console.log(reason);

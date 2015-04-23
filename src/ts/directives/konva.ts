@@ -13,7 +13,7 @@
         stage: '='
       },
       link: function(scope, element, attrs) {
-        
+        scope.stage.element = element;
         scope.stage.stage = new Konva.Stage({
           container: element[0],
           width: 110,

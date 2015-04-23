@@ -1,6 +1,6 @@
 ///<reference path="../../../tools/typings/tsd.d.ts" />
 ///<reference path="../../../tools/typings/typescriptApp.d.ts" />
-declare var Konva:any;
+
 
 (function() {
   angular
@@ -25,7 +25,6 @@ declare var Konva:any;
     function loadData(data) {
       var p = $q.defer();
       var self = this;
-
       this.imageLayer = new Konva.Layer();
       this.svgLayer = new Konva.Layer();
       this.pbmLayer = new Konva.Layer();
@@ -34,8 +33,6 @@ declare var Konva:any;
       var svgLayer = this.svgLayer;
       var pbmLayer = this.pbmLayer;
       stage.destroyChildren();
-
-
       stage.add(imageLayer);
       stage.add(svgLayer);
       stage.add(pbmLayer);
@@ -103,6 +100,7 @@ declare var Konva:any;
 
       imageObj.src = data.image;
 
+     
       return p.promise;
 
     }
