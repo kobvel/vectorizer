@@ -45,9 +45,6 @@
           var canvasY = Math.floor(e.pageY - canvasOffset.top);
           var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
           var pixel = imageData.data;
-
-
-
           var pixelColor = 'rgba(' + pixel[0] + ', ' + pixel[1] + ', ' + pixel[2] + ', ' + pixel[3] + ')';
           scope.app.Params.input[scope.picker] = pixelColor;
           scope.$apply();

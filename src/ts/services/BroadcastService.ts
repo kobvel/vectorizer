@@ -9,9 +9,16 @@
   BroadcastService.$inject = ['$rootScope'];
   function BroadcastService($rootScope) {
     return {   
-      imageChanged: imageChanged     
+      imageChanged: imageChanged,
+      pickColor: pickColor     
     };   
+    function pickColor($event, model) {
+      $event.stopPropagation();
+      $rootScope.$broadcast('setModel', {
+        model: model
+        });
 
+    }
 
     function imageChanged(image) {
       $rootScope.$broadcast('imageChanged', {
