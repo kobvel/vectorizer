@@ -22,15 +22,18 @@
             editImage: editImage,
             stopEdit: stopEdit,
             clearArea: clearArea,
+            getCanvas: getCanvas,
             cRedo: cRedo,
             cUndo: cUndo
             });
 
+        function getCanvas() {
+            return canvas[0].toDataURL();            
+        }
         function cPush() {
             cStep++;
             if (cStep < cPushArray.length) { cPushArray.length = cStep; }            
-            cPushArray.push(canvas[0].toDataURL());
-            console.log(cPushArray);
+            cPushArray.push(canvas[0].toDataURL());         
         }
 
         function cUndo(event) {
@@ -57,7 +60,6 @@
 
         function editImage(event) {
             canvas = Stage.element.find('canvas:nth-child(3)');
-            console.log(Stage.element, canvas);
             ctx = canvas[0].getContext('2d');
             canvas.bind('mousemove', moveHandler);
             canvas.bind('mousedown', downHandler);

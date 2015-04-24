@@ -59,12 +59,13 @@
 						
 
 						<form >	
-							<div ng-show="app.currentTab2.text=='Edit'" ng-controller="EditorController as edit">
-								<button ng-click="edit.editImage($event)">Pencil</button>
-								<button ng-click="edit.stopEdit($event)">Stop Drawing</button>
-								<button ng-click="edit.clearArea($event)">Clear Area</button>
-								<button ng-click="edit.cUndo($event)">Undo</button>
-								<button ng-click="edit.cRedo($event)">Redo</button>
+							<div class="diveditor" ng-show="app.currentTab2.text=='Edit'" ng-controller="EditorController as edit">
+								<button ng-click="edit.editImage($event)" class="btn btn-primary">Pencil    edit</button>
+								<button ng-click="edit.stopEdit($event)" class="btn btn-primary">Stop Drawing</button>
+								<button ng-click="edit.clearArea($event)" class="btn btn-primary">Clear Area</button>
+								<button ng-click="edit.cUndo($event)" class="btn btn-primary">Undo</button>
+								<button ng-click="edit.cRedo($event)" class="btn btn-primary">Redo</button>
+								<button ng-click="app.processDataUrl(edit.getCanvas())"class="btn btn-primary btn-block">Process</button>
 
 							</div>
 							<div id="paramscontainer" class="container-fluid" ng-show="app.currentTab2.text=='Params'">

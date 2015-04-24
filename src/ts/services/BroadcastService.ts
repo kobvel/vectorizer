@@ -10,8 +10,8 @@
   function BroadcastService($rootScope) {
     return {   
       imageChanged: imageChanged     
-    };
-  
+    };   
+
 
     function imageChanged(image) {
       $rootScope.$broadcast('imageChanged', {

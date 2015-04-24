@@ -35,6 +35,7 @@ declare var VK:any;
       processExistingImage: processExistingImage,
       changeVisibleLayer: changeVisibleLayer,
       changeToggleCollapse: changeToggleCollapse,
+      processDataUrl: processDataUrl,
       visibleLayer: null,
       isCollapsed: true,
       Params: Params,
@@ -53,29 +54,29 @@ declare var VK:any;
       if (self.file) {
         switch (self.visibleLayer) {
           case 'SVG':
-            self.stage.svgLayer.visible(true);
-            self.stage.pbmLayer.visible(false);
-            self.stage.imageLayer.visible(false);
-            break;
+          self.stage.svgLayer.visible(true);
+          self.stage.pbmLayer.visible(false);
+          self.stage.imageLayer.visible(false);
+          break;
           case 'IMG':
-            self.stage.svgLayer.visible(false);
-            self.stage.imageLayer.visible(true);
-            self.stage.pbmLayer.visible(false);
-            break;
+          self.stage.svgLayer.visible(false);
+          self.stage.imageLayer.visible(true);
+          self.stage.pbmLayer.visible(false);
+          break;
           case 'PBM':
-            self.stage.pbmLayer.visible(true);
-            self.stage.svgLayer.visible(false);
-            self.stage.imageLayer.visible(false);
-            break;
+          self.stage.pbmLayer.visible(true);
+          self.stage.svgLayer.visible(false);
+          self.stage.imageLayer.visible(false);
+          break;
           case 'ALL':
-            self.stage.pbmLayer.visible(false);
-            self.stage.svgLayer.visible(true);
-            self.stage.imageLayer.visible(true);
-            break;
+          self.stage.pbmLayer.visible(false);
+          self.stage.svgLayer.visible(true);
+          self.stage.imageLayer.visible(true);
+          break;
           default:
-            self.stage.pbmLayer.visible(false);
-            self.stage.svgLayer.visible(true);
-            self.stage.imageLayer.visible(false);
+          self.stage.pbmLayer.visible(false);
+          self.stage.svgLayer.visible(true);
+          self.stage.imageLayer.visible(false);
         }
       }
     }
@@ -84,6 +85,7 @@ declare var VK:any;
       var promise = Uploader
       .getFileData(self.file)
       .then(function getDataSuccess(fileData) {
+        console.log(fileData);
         fileData.append('params', JSON.stringify(Params.input));
         fileData.append('gamma', JSON.stringify(Params.gamma));
         uploadImageData(fileData);
@@ -96,10 +98,18 @@ declare var VK:any;
       var data = new FormData;                  
       data.append('imagesrc', Stage.imagePath);
       data.append('params', JSON.stringify(Params.input));
-      data.append('gamma', JSON.stringify(Params.gamma));
-      console.log(data);    
+      data.append('gamma', JSON.stringify(Params.gamma));    
       uploadImageData(data);       
     };
+
+    function processDataUrl(fileBase64) {
+      var data = new FormData;                  
+      data.append('imageData', fileBase64);
+      data.append('params', JSON.stringify(Params.input));
+      data.append('gamma', JSON.stringify(Params.gamma));    
+      uploadImageData(data);    
+
+    }
 
 
     function uploadImageData(fd) {
