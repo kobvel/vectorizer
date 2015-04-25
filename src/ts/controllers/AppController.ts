@@ -52,6 +52,7 @@ declare var VK:any;
     
     function changeVisibleLayer() {
       if (self.file) {
+       
         switch (self.visibleLayer) {
           case 'SVG':
           self.stage.svgLayer.visible(true);

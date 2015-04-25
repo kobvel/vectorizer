@@ -43,7 +43,8 @@
 
       imageObj.onload = function() {
         var scale = self.offsetWidth / imageObj.width;
-          
+        var b;
+        
         if (imageObj) {
           
           var imagepath = imageObj.src.split('/')[4];

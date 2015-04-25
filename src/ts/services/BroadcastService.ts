@@ -10,7 +10,7 @@
   function BroadcastService($rootScope) {
     return {   
       imageChanged: imageChanged,
-      pickColor: pickColor     
+      pickColor: pickColor   
     };   
     function pickColor($event, model) {
       $event.stopPropagation();
@@ -19,7 +19,7 @@
         });
 
     }
-
+   
     function imageChanged(image) {
       $rootScope.$broadcast('imageChanged', {
         image: image

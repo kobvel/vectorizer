@@ -11,7 +11,6 @@ declare var VK:any;
     function ShareController($scope, Stage) {
         var self = this;
 
-
         angular.extend(self, {
             stage: Stage,
             shareVk: shareVk

@@ -6,16 +6,16 @@
     .module('Vectorizer.controllers')
     .controller('EditorController', EditorController);
 
-    EditorController.$inject = ['Stage'];
+    EditorController.$inject = ['Stage', '$rootScope'];
 
-    function EditorController(Stage) {
+    function EditorController(Stage, $rootScope) {
         var self = this;
         var ctx, canvas;
         var mousePressed = false;
         var lastX;
         var lastY;        
         var cPushArray = [];
-        var cStep = -1;
+        var cStep = 0;
         var imageData;
         var pixelStack = [];
         var fillColor;
@@ -26,18 +26,57 @@
             clearArea: clearArea,
             getCanvas: getCanvas,
             fillArea: fillArea,
+            saveFirstState: saveFirstState,
             cRedo: cRedo,
             cUndo: cUndo,
+            zoomArea: zoomArea,
             checkedColor: 'black'
             });
+
+        function zoomArea(){
+            var layer = self.stage.pbmLayer;
+            var stage = self.stage;
+            var zoomLevel = 1.5;
+            layer.on('mouseenter', function() {
+                layer.scale({
+                    x : zoomLevel,
+                    y : zoomLevel
+                    });
+                layer.draw();
+                });
+            layer.on('mousemove', function(e) {                
+                var pos = stage.getPointerPosition();
+                layer.x( - (pos.x));
+                layer.y( - (pos.y));
+                layer.draw();
+                });
+            layer.on('mouseleave', function() {
+                layer.x(0);
+                layer.y(0);
+                layer.scale({
+                    x : 1,
+                    y : 1
+                    });
+                layer.draw();
+                });
+        }
+
+
+        function saveFirstState() {
+            canvas = Stage.element.find('canvas:nth-child(3)');            
+            cStep++;
+            cPushArray[0] = canvas[0].toDataURL();            
+        }
 
         function getCanvas() {
             return canvas[0].toDataURL();            
         }
-        
+
         function cPush() {
             cStep++;
-            if (cStep < cPushArray.length) { cPushArray.length = cStep; }            
+            if (cStep < cPushArray.length) { 
+                cPushArray.length = cStep;
+            }            
             cPushArray.push(canvas[0].toDataURL());         
         }
 
@@ -64,10 +103,9 @@
         }
 
         function editImage(event) {
-
+            console.log($rootScope);
             canvas = Stage.element.find('canvas:nth-child(3)');
             ctx = canvas[0].getContext('2d');
-            
             canvas.bind('mousemove', moveHandler);
             canvas.bind('mousedown', downHandler);
             canvas.bind('mouseup', upHandler);
@@ -76,12 +114,7 @@
         }                     
 
         function stopEdit() {
-            console.log(canvas);
-            /*canvas.unbind('mousemove', moveHandler);
-            canvas.unbind('mousedown', downHandler);
-            canvas.unbind('mouseup', upHandler);
-            canvas.unbind('mouseleave', leaveHandler);
-*/          canvas.unbind();
+            canvas.unbind();
         }
         function leaveHandler(e) {
             mousePressed = false;
@@ -114,7 +147,7 @@
                 ctx.lineTo(x, y);
                 ctx.closePath();
                 ctx.stroke();
-                
+
             }
             lastX = x; lastY = y;
         }
@@ -139,32 +172,30 @@
             }
             canvas = Stage.element.find('canvas:nth-child(3)');
             canvas.bind('click', startFill);
-            
+
         }
 
 
-        function startFill(e) {
-           
+        function startFill(e) {            
             ctx = canvas[0].getContext('2d');
             var canvasOffset = canvas.offset();
             var canvasX = Math.floor(e.pageX - canvasOffset.left);
             var canvasY = Math.floor(e.pageY - canvasOffset.top);
             var canvasWidth = canvas[0].width;
             var canvasHeight = canvas[0].height;
-
+            console.log(canvasX, canvasY);
             var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
             var colorLayerData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
             pixelStack = [[canvasX, canvasY]];
-            console.log(imageData.data);
             
-            
+
+            cPush(); 
             floodfill(canvasX,canvasY,fillColor,ctx, canvasWidth, canvasHeight, 254);
 
 
 
 //Floodfill functions
-function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {
-    console.log(fillColor);
+function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {       
     var img = ctx.getImageData(0,0,width,height);
     var data = img.data;
     var length = data.length;
@@ -172,6 +203,8 @@ function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {
     var i = (x+y*width)*4;
     var e = i, w = i, me, mw, w2 = width*4;
     var targetcolor = [data[i],data[i+1],data[i+2],data[i+3]];
+    console.log(targetcolor);
+    console.log(fillcolor);
     var targettotal = data[i]+data[i+1]+data[i+2]+data[i+3];
 
     if(!pixelCompare(i,targetcolor,targettotal,fillcolor,data,length,tolerance)) { return false; }
