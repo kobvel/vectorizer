@@ -18,7 +18,7 @@
         var cStep = -1;
         var imageData;
         var pixelStack = [];
-
+        var fillColor;
         angular.extend(self, {
             stage: Stage,
             editImage: editImage,
@@ -27,12 +27,14 @@
             getCanvas: getCanvas,
             fillArea: fillArea,
             cRedo: cRedo,
-            cUndo: cUndo
+            cUndo: cUndo,
+            checkedColor: 'black'
             });
 
         function getCanvas() {
             return canvas[0].toDataURL();            
         }
+        
         function cPush() {
             cStep++;
             if (cStep < cPushArray.length) { cPushArray.length = cStep; }            
@@ -62,6 +64,7 @@
         }
 
         function editImage(event) {
+
             canvas = Stage.element.find('canvas:nth-child(3)');
             ctx = canvas[0].getContext('2d');
             
@@ -74,11 +77,11 @@
 
         function stopEdit() {
             console.log(canvas);
-            canvas.unbind('mousemove', moveHandler);
+            /*canvas.unbind('mousemove', moveHandler);
             canvas.unbind('mousedown', downHandler);
             canvas.unbind('mouseup', upHandler);
             canvas.unbind('mouseleave', leaveHandler);
-
+*/          canvas.unbind();
         }
         function leaveHandler(e) {
             mousePressed = false;
@@ -115,14 +118,33 @@
             }
             lastX = x; lastY = y;
         }
-        function fillArea() {
-            canvas = Stage.element.find('canvas:nth-child(3)');
+        function fillArea(color) {           
 
+            if (color === 'black') {
+                fillColor = {
+                    r: 0,
+                    g: 0,
+                    b: 0,
+                    a: 255
+                };
+            }
+            else {
+                fillColor = {
+                    r: 255,
+                    g: 255,
+                    b: 255,
+                    a: 255
+                };
+
+            }
+            canvas = Stage.element.find('canvas:nth-child(3)');
             canvas.bind('click', startFill);
+            
         }
 
 
         function startFill(e) {
+           
             ctx = canvas[0].getContext('2d');
             var canvasOffset = canvas.offset();
             var canvasX = Math.floor(e.pageX - canvasOffset.left);
@@ -134,102 +156,94 @@
             var colorLayerData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
             pixelStack = [[canvasX, canvasY]];
             console.log(imageData.data);
-            var fillColor = {
-                red: 111,
-                green: 38,
-                blue: 38,
-                alpha: imageData.data[3]
-            };
-            var setColor = {
-                red: 255,
-                green: 255,
-                blue: 255
-            };
             
-           
-        
-           
-            while (pixelStack.length)
-            {
-                var newPos, x, y, pixelPos, reachLeft, reachRight;
-                newPos = pixelStack.pop();
-                x = newPos[0];
-                y = newPos[1];
+            
+            floodfill(canvasX,canvasY,fillColor,ctx, canvasWidth, canvasHeight, 254);
 
-                pixelPos = (y * canvasWidth + x) * 4;
-                while(y-- >= 1 && matchStartColor(pixelPos))
-                {
-                    pixelPos -= canvasWidth * 4;
-                }
-                pixelPos += canvasWidth * 4;
-                ++y;
-                reachLeft = false;
-                reachRight = false;
-                while(y++ < canvasHeight+2  && matchStartColor(pixelPos))
-                {
 
-                    colorPixel(pixelPos);
-                  
 
-                    if(x > 0)
-                    {
+//Floodfill functions
+function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {
+    console.log(fillColor);
+    var img = ctx.getImageData(0,0,width,height);
+    var data = img.data;
+    var length = data.length;
+    var Q = [];
+    var i = (x+y*width)*4;
+    var e = i, w = i, me, mw, w2 = width*4;
+    var targetcolor = [data[i],data[i+1],data[i+2],data[i+3]];
+    var targettotal = data[i]+data[i+1]+data[i+2]+data[i+3];
 
-                        if(matchStartColor(pixelPos - 4))
-                        {
-
-                            if(!reachLeft){
-                                pixelStack.push([x - 1, y]);
-                                reachLeft = true;
-                            }
-                        }
-                        else if(reachLeft)
-                        {
-                            reachLeft = false;
-                        }
-                    }
-
-                    if(x < canvasWidth-1)
-                    {
-                        if(matchStartColor(pixelPos + 4))
-                        {
-                            if(!reachRight)
-                            {
-                                pixelStack.push([x + 1, y]);
-                                reachRight = true;
-                            }
-                        }
-                        else if(reachRight)
-                        {
-                            reachRight = false;
-                        }
-                    }
-
-                    pixelPos += canvasWidth * 4;
-                }
+    if(!pixelCompare(i,targetcolor,targettotal,fillcolor,data,length,tolerance)) { return false; }
+    Q.push(i);
+    while(Q.length) {
+        i = Q.pop();
+        if(pixelCompareAndSet(i,targetcolor,targettotal,fillcolor,data,length,tolerance)) {
+            e = i;
+            w = i;
+            mw = parseInt(i/w2)*w2; //left bound
+            me = mw+w2;    //right bound            
+            while(mw<(w-=4) && pixelCompareAndSet(w,targetcolor,targettotal,fillcolor,data,length,tolerance)); //go left until edge hit
+            while(me>(e+=4) && pixelCompareAndSet(e,targetcolor,targettotal,fillcolor,data,length,tolerance)); //go right until edge hit
+            for(var j=w;j<e;j+=4) {
+                if (j - w2 >= 0 && pixelCompare(j - w2, targetcolor, targettotal, fillcolor, data, length, tolerance)) {
+                    Q.push(j - w2); } 
+                    if (j + w2 < length && pixelCompare(j + w2, targetcolor, targettotal, fillcolor, data, length, tolerance)){ 
+                        Q.push(j + w2);
+                    };
+                }             
             }
-            console.log(colorLayerData);
-            ctx.putImageData(colorLayerData, 0, 0);
-
-            function matchStartColor(pixelPos)
-            {
-                var r = colorLayerData.data[pixelPos];    
-                var g = colorLayerData.data[pixelPos+1];    
-                var b = colorLayerData.data[pixelPos+2];
-                console.log(r == fillColor.red && g ==  fillColor.green && b == fillColor.red);
-                return (r == setColor.red && g ==  setColor.green && b == setColor.red);
-            }
-
-            function colorPixel(pixelPos)
-            {
-                colorLayerData.data[pixelPos] = fillColor.red;
-                colorLayerData.data[pixelPos+1] = fillColor.green;
-                colorLayerData.data[pixelPos+2] = fillColor.red;
-                colorLayerData.data[pixelPos+3] = 255;
-            }         
-
-
         }
+        ctx.putImageData(img,0,0);
+    }
 
+    function pixelCompare(i, targetcolor, targettotal, fillcolor, data, length, tolerance) {
+        if (i < 0 || i >= length) { 
+            return false;
+        } //out of bounds
+        if (data[i + 3] === 0) {
+            return true;
+            };  //surface is invisible
 
-    };
-    })();
+            if (
+                (targetcolor[3] === fillcolor.a) &&
+                (targetcolor[0] === fillcolor.r) &&
+                (targetcolor[1] === fillcolor.g) &&
+                (targetcolor[2] === fillcolor.b)
+                ) {
+        return false; //target is same as fill
+    }
+    if (
+        (targetcolor[3] === data[i + 3]) &&
+        (targetcolor[0] === data[i]) &&
+        (targetcolor[1] === data[i + 1]) &&
+        (targetcolor[2] === data[i + 2])
+        ) {
+        return true; //target matches surface 
+    }
+    if (
+        Math.abs(targetcolor[3] - data[i + 3]) <= (255 - tolerance) &&
+        Math.abs(targetcolor[0] - data[i]) <= tolerance &&
+        Math.abs(targetcolor[1] - data[i + 1]) <= tolerance &&
+        Math.abs(targetcolor[2] - data[i + 2]) <= tolerance
+        ) {
+        return true; //target to surface within tolerance 
+    }
+    return false; //no match
+}
+
+function pixelCompareAndSet(i,targetcolor,targettotal,fillcolor,data,length,tolerance) {
+    if(pixelCompare(i,targetcolor,targettotal,fillcolor,data,length,tolerance)) {
+        //fill the color
+        data[i]      = fillcolor.r;
+        data[i+1] = fillcolor.g;
+        data[i+2] = fillcolor.b;
+        data[i+3] = fillcolor.a;
+        return true;
+    }
+    return false;
+}
+}
+
+};
+})();

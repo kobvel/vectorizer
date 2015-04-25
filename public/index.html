@@ -65,7 +65,14 @@
 								<button ng-click="edit.clearArea($event)" class="btn btn-primary">Clear Area</button>
 								<button ng-click="edit.cUndo($event)" class="btn btn-primary">Undo</button>
 								<button ng-click="edit.cRedo($event)" class="btn btn-primary">Redo</button>
-								<button ng-click="edit.fillArea()" class="btn btn-primary">Fill Area</button>
+								<button ng-click="edit.fillArea(edit.checkedColor)" class="btn btn-primary">Fill Area</button>
+								
+								<label class="radio-inline">
+								  <input ng-model="edit.checkedColor" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="white"> white
+								</label>
+								<label class="radio-inline">
+								  <input ng-model="edit.checkedColor" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="black"> black
+								</label>
 								<button ng-click="app.processDataUrl(edit.getCanvas())"class="btn btn-primary btn-block">Process</button>
 
 							</div>

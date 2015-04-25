@@ -36,7 +36,7 @@ declare var VK:any;
       changeVisibleLayer: changeVisibleLayer,
       changeToggleCollapse: changeToggleCollapse,
       processDataUrl: processDataUrl,
-      visibleLayer: null,
+      visibleLayer: 'SVG',
       isCollapsed: true,
       Params: Params,
       tabs1: tabs1,
