@@ -16,6 +16,7 @@
         var lastY;        
         var cPushArray = [];
         var cStep = 0;
+        var curColor;
         var imageData;
         var pixelStack = [];
         var fillColor;
@@ -34,23 +35,29 @@
             });
 
         function zoomArea(){
+
             var layer = self.stage.pbmLayer;
             var stage = self.stage;
-            var zoomLevel = 1.5;
-            layer.on('mouseenter', function() {
+            var zoomLevel = 2;
+            canvas = Stage.element.find('canvas:nth-child(3)');
+            ctx = canvas[0].getContext('2d');
+            canvas.on('mouseenter', function() {
                 layer.scale({
                     x : zoomLevel,
                     y : zoomLevel
                     });
                 layer.draw();
                 });
-            layer.on('mousemove', function(e) {                
-                var pos = stage.getPointerPosition();
-                layer.x( - (pos.x));
-                layer.y( - (pos.y));
+            canvas.on('mousemove', function(e) { 
+                
+                var canvasOffset = canvas.offset();
+                var canvasX = Math.floor(e.pageX - canvasOffset.left);
+                var canvasY = Math.floor(e.pageY - canvasOffset.top);                            
+                layer.x( - (canvasX));
+                layer.y( - (canvasY));
                 layer.draw();
                 });
-            layer.on('mouseleave', function() {
+            canvas.on('mouseleave', function() {
                 layer.x(0);
                 layer.y(0);
                 layer.scale({
@@ -170,13 +177,14 @@
                 };
 
             }
-            canvas = Stage.element.find('canvas:nth-child(3)');
+             canvas = Stage.element.find('canvas:nth-child(3)');   
             canvas.bind('click', startFill);
 
         }
 
 
-        function startFill(e) {            
+        function startFill(e) {   
+     
             ctx = canvas[0].getContext('2d');
             var canvasOffset = canvas.offset();
             var canvasX = Math.floor(e.pageX - canvasOffset.left);
@@ -201,6 +209,11 @@ function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {
     var length = data.length;
     var Q = [];
     var i = (x+y*width)*4;
+    curColor = {
+        r: data[i],
+        g: data[i + 1],
+        b: data[i + 2]
+    };
     var e = i, w = i, me, mw, w2 = width*4;
     var targetcolor = [data[i],data[i+1],data[i+2],data[i+3]];
     console.log(targetcolor);
@@ -254,12 +267,14 @@ function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {
         ) {
         return true; //target matches surface 
     }
+   
     if (
         Math.abs(targetcolor[3] - data[i + 3]) <= (255 - tolerance) &&
         Math.abs(targetcolor[0] - data[i]) <= tolerance &&
         Math.abs(targetcolor[1] - data[i + 1]) <= tolerance &&
         Math.abs(targetcolor[2] - data[i + 2]) <= tolerance
         ) {
+        console.log(data[i],data[i+1],data[2]);
         return true; //target to surface within tolerance 
     }
     return false; //no match
@@ -268,7 +283,7 @@ function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {
 function pixelCompareAndSet(i,targetcolor,targettotal,fillcolor,data,length,tolerance) {
     if(pixelCompare(i,targetcolor,targettotal,fillcolor,data,length,tolerance)) {
         //fill the color
-        data[i]      = fillcolor.r;
+        data[i] = fillcolor.r;
         data[i+1] = fillcolor.g;
         data[i+2] = fillcolor.b;
         data[i+3] = fillcolor.a;
