@@ -20,6 +20,8 @@
         var imageData;
         var pixelStack = [];
         var fillColor;
+        var counter1 = 0;
+        var counter2 = 0;
         angular.extend(self, {
             stage: Stage,
             editImage: editImage,
@@ -49,7 +51,7 @@
                 layer.draw();
                 });
             canvas.on('mousemove', function(e) { 
-                
+
                 var canvasOffset = canvas.offset();
                 var canvasX = Math.floor(e.pageX - canvasOffset.left);
                 var canvasY = Math.floor(e.pageY - canvasOffset.top);                            
@@ -121,6 +123,7 @@
         }                     
 
         function stopEdit() {
+            console.log(counter1, counter2);
             canvas.unbind();
         }
         function leaveHandler(e) {
@@ -177,14 +180,14 @@
                 };
 
             }
-             canvas = Stage.element.find('canvas:nth-child(3)');   
+            canvas = Stage.element.find('canvas:nth-child(3)');   
             canvas.bind('click', startFill);
 
         }
 
 
         function startFill(e) {   
-     
+
             ctx = canvas[0].getContext('2d');
             var canvasOffset = canvas.offset();
             var canvasX = Math.floor(e.pageX - canvasOffset.left);
@@ -203,7 +206,8 @@
 
 
 //Floodfill functions
-function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {       
+function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {  
+
     var img = ctx.getImageData(0,0,width,height);
     var data = img.data;
     var length = data.length;
@@ -216,25 +220,23 @@ function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {
     };
     var e = i, w = i, me, mw, w2 = width*4;
     var targetcolor = [data[i],data[i+1],data[i+2],data[i+3]];
-    console.log(targetcolor);
-    console.log(fillcolor);
-    var targettotal = data[i]+data[i+1]+data[i+2]+data[i+3];
+  
 
-    if(!pixelCompare(i,targetcolor,targettotal,fillcolor,data,length,tolerance)) { return false; }
+    if(!pixelCompare(i,targetcolor,fillcolor,data,length,tolerance)) { return false; }
     Q.push(i);
     while(Q.length) {
         i = Q.pop();
-        if(pixelCompareAndSet(i,targetcolor,targettotal,fillcolor,data,length,tolerance)) {
+        if(pixelCompareAndSet(i,targetcolor,fillcolor,data,length,tolerance)) {
             e = i;
             w = i;
             mw = parseInt(i/w2)*w2; //left bound
             me = mw+w2;    //right bound            
-            while(mw<(w-=4) && pixelCompareAndSet(w,targetcolor,targettotal,fillcolor,data,length,tolerance)); //go left until edge hit
-            while(me>(e+=4) && pixelCompareAndSet(e,targetcolor,targettotal,fillcolor,data,length,tolerance)); //go right until edge hit
+            while(mw<(w-=4) && pixelCompareAndSet(w,targetcolor,fillcolor,data,length,tolerance)); //go left until edge hit
+            while(me>(e+=4) && pixelCompareAndSet(e,targetcolor,fillcolor,data,length,tolerance)); //go right until edge hit
             for(var j=w;j<e;j+=4) {
-                if (j - w2 >= 0 && pixelCompare(j - w2, targetcolor, targettotal, fillcolor, data, length, tolerance)) {
+                if (j - w2 >= 0 && pixelCompare(j - w2, targetcolor, fillcolor, data, length, tolerance)) {
                     Q.push(j - w2); } 
-                    if (j + w2 < length && pixelCompare(j + w2, targetcolor, targettotal, fillcolor, data, length, tolerance)){ 
+                    if (j + w2 < length && pixelCompare(j + w2, targetcolor, fillcolor, data, length, tolerance)){ 
                         Q.push(j + w2);
                     };
                 }             
@@ -243,7 +245,8 @@ function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {
         ctx.putImageData(img,0,0);
     }
 
-    function pixelCompare(i, targetcolor, targettotal, fillcolor, data, length, tolerance) {
+    function pixelCompare(i, targetcolor, fillcolor, data, length, tolerance) {
+
         if (i < 0 || i >= length) { 
             return false;
         } //out of bounds
@@ -251,37 +254,45 @@ function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {
             return true;
             };  //surface is invisible
 
-            if (
-                (targetcolor[3] === fillcolor.a) &&
+            if (  
+
+                //(targetcolor[3] === fillcolor.a) &&
                 (targetcolor[0] === fillcolor.r) &&
                 (targetcolor[1] === fillcolor.g) &&
                 (targetcolor[2] === fillcolor.b)
                 ) {
+                counter1++;
         return false; //target is same as fill
     }
     if (
-        (targetcolor[3] === data[i + 3]) &&
+
+        //(targetcolor[3] === data[i + 3]) &&
         (targetcolor[0] === data[i]) &&
         (targetcolor[1] === data[i + 1]) &&
         (targetcolor[2] === data[i + 2])
         ) {
         return true; //target matches surface 
     }
-   
+
     if (
         Math.abs(targetcolor[3] - data[i + 3]) <= (255 - tolerance) &&
         Math.abs(targetcolor[0] - data[i]) <= tolerance &&
         Math.abs(targetcolor[1] - data[i + 1]) <= tolerance &&
         Math.abs(targetcolor[2] - data[i + 2]) <= tolerance
         ) {
-        console.log(data[i],data[i+1],data[2]);
+        
         return true; //target to surface within tolerance 
     }
+    /*else{
+        counter2++;
+        console.log(targetcolor,data[i], data[i+1],data[i+2],data[i+3]);    
+    }*/
+    
     return false; //no match
 }
 
-function pixelCompareAndSet(i,targetcolor,targettotal,fillcolor,data,length,tolerance) {
-    if(pixelCompare(i,targetcolor,targettotal,fillcolor,data,length,tolerance)) {
+function pixelCompareAndSet(i,targetcolor,fillcolor,data,length,tolerance) {
+    if(pixelCompare(i,targetcolor,fillcolor,data,length,tolerance)) {
         //fill the color
         data[i] = fillcolor.r;
         data[i+1] = fillcolor.g;
