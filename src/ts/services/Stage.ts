@@ -49,8 +49,7 @@
           
           var imagepath = imageObj.src.split('/')[4];
           self.imagePath = imagepath;
-        }
-          
+        }          
 
         self.image = new Konva.Image({
           x: 0,
@@ -80,7 +79,7 @@
           svgLayer.draw();
           p.resolve();
         };
-
+       
         pbmObj.onload = function() {
           self.pbm = new Konva.Image({
             x: 0,

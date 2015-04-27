@@ -254,8 +254,7 @@ function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {
             return true;
             };  //surface is invisible
 
-            if (  
-
+            if (
                 //(targetcolor[3] === fillcolor.a) &&
                 (targetcolor[0] === fillcolor.r) &&
                 (targetcolor[1] === fillcolor.g) &&
@@ -264,6 +263,7 @@ function floodfill(x,y,fillcolor,ctx,width,height,tolerance) {
                 counter1++;
         return false; //target is same as fill
     }
+
     if (
 
         //(targetcolor[3] === data[i + 3]) &&

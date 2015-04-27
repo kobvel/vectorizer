@@ -38,7 +38,12 @@
 
 				<div class="col-md-4" id="navpanelprop">
 					<div class="col-md-12 paneldiv">
+
+						
 						<div id="socialshare" ng-controller="ShareController as share">
+							<div ng-show="app.currentTab1.text=='Save'">
+								<button  ng-click="app.saveImg()" class="btn btn-primary">save Image</button>
+							</div>
 							<section id="set-3" ng-show="app.currentTab1.text=='Share'">
 								<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
 									<a class="hi-icon icon-fb">Fb</a>
@@ -69,10 +74,10 @@
 								<button ng-click="edit.zoomArea()" class="btn btn-primary">ZOOM</button>
 								
 								<label class="radio-inline">
-								  <input ng-model="edit.checkedColor" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="white"> white
+									<input ng-model="edit.checkedColor" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="white"> white
 								</label>
 								<label class="radio-inline">
-								  <input ng-model="edit.checkedColor" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="black"> black
+									<input ng-model="edit.checkedColor" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="black"> black
 								</label>
 								<button ng-click="app.processDataUrl(edit.getCanvas())"class="btn btn-primary btn-block">Process</button>
 

@@ -30,7 +30,9 @@ declare var VK:any;
       stage: Stage,
       loader: Loader,
       broadcast: BroadcastService,
-      file: null,     
+      file: null,   
+      svgUrl: null,
+      saveImg: saveImg,  
       dataChanged: dataChanged,
       processExistingImage: processExistingImage,
       changeVisibleLayer: changeVisibleLayer,
@@ -49,10 +51,17 @@ declare var VK:any;
     function changeToggleCollapse() {
       self.isCollapsed = !self.isCollapsed;
     }
-    
+    function saveImg(){
+      
+      var link = document.createElement('a');
+      link.download = 'test.png';
+      link.href = self.stage.svgLayer.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+      link.click();
+      
+    }
     function changeVisibleLayer() {
       if (self.file) {
-       
+        
         switch (self.visibleLayer) {
           case 'SVG':
           self.stage.svgLayer.visible(true);
@@ -109,7 +118,6 @@ declare var VK:any;
       data.append('params', JSON.stringify(Params.input));
       data.append('gamma', JSON.stringify(Params.gamma));    
       uploadImageData(data);    
-
     }
 
 
@@ -126,7 +134,7 @@ declare var VK:any;
           console.log(reason);
           });
 
-      promise['finally'](function() {
+      promise['finally'](function() {       
         Loader.loading(false);
         });
     };
