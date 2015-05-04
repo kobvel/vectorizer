@@ -1,3 +1,5 @@
+///<reference path="./tools/typings/tsd.d.ts" />
+///<reference path="./tools/typings/typescriptApp.d.ts" />
 process.env.TMPDIR = './tmp';
 
 var express = require("express");
@@ -20,11 +22,11 @@ app.use(serveStatic('public', {
   'index': ['index.html']
 }));
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.sendfile("public/index.html");
 });
 
-app.post('/api/photo', multipartMiddleware, function(req, res) {
+app.post('/api/photo', multipartMiddleware, function (req, res) {
 
   var base64Data = req.body.imageData;
   var paramsData = req.body.params;
@@ -50,94 +52,94 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
 
   async.waterfall([
 
-      function moveFile(callback) {
-        if (match) {
-          fs.writeFile(
-            image.srcPath,
-            new Buffer(match[2].replace(/ /g, '+'), 'base64'),
-            function(error) {
-              if (error) {
-                callback(error);
-              };
-
-              callback(null);
-            });
-        } else {
-          callback(null);
-        }
-      },
-      function convertImgBMP(callback) {
-
-        var child = exec('convert ' + image.srcPath + ' ' + bmp,
-          function(error, stdout, stderr) {
-
+    function moveFile(callback) {
+      if (match) {
+        fs.writeFile(
+          image.srcPath,
+          new Buffer(match[2].replace(/ /g, '+'), 'base64'),
+          function (error) {
             if (error) {
               callback(error);
-            }
+            };
 
             callback(null);
           });
-      },
-      function convertImgPBM(callback) {
-        var bmp = image.path + '.bmp';
-        var pbm = image.path + '.pbm';
-        var child = exec('mkbitmap ' + bmp + ' -n -t ' + gammaData + ' ' + pbm,
-          function(error, stdout, stderr) {
-
-            if (error) {
-              callback(error);
-            }
-
-            callback(null);
-          });
-      },
-      function convertImgPBM(callback) {
-
-        var bmp = image.path + '.bmp';
-        var pbm = image.path + '.pbm';
-        var child = exec('convert ' + pbm + ' ' + bmp,
-          function(error, stdout, stderr) {
-
-            if (error) {
-              callback(error);
-            }
-            callback(null);
-          });
-      },
-      function processImg(callback) {
-        var svg = image.path + '.svg';
-        var pbm = image.path + '.pbm';
-        var options = ["--svg"];
-
-        if (jsonparam) {
-          Object.keys(jsonparam).forEach(function(i) {
-            if (paramsTypes.indexOf(i) !== -1) {
-              if (!!jsonparam[i] && jsonparam[i] !== true) {
-                options.push('--' + i);
-                options.push(jsonparam[i]);
-              } else if (jsonparam[i] == true) {
-
-                options.push('--' + i);
-
-              }
-            }
-          });
-        };
-
-        options = options.concat([pbm, '-o', svg]);
-
-        var potrace = spawn('potrace', options);
-        console.log('potrace', options);
-        potrace.on('error', function(error) {
-          callback(error);
-        });
-        potrace.on('close', function(code) {
-          callback(null);
-        });
-
+      } else {
+        callback(null);
       }
-    ],
-    function(err) {
+    },
+    function convertImgBMP(callback) {
+
+      var child = exec('convert ' + image.srcPath + ' ' + bmp,
+        function (error, stdout, stderr) {
+
+          if (error) {
+            callback(error);
+          }
+
+          callback(null);
+        });
+    },
+    function convertImgPBM(callback) {
+      var bmp = image.path + '.bmp';
+      var pbm = image.path + '.pbm';
+      var child = exec('mkbitmap ' + bmp + ' -n -t ' + gammaData + ' ' + pbm,
+        function (error, stdout, stderr) {
+
+          if (error) {
+            callback(error);
+          }
+
+          callback(null);
+        });
+    },
+    function convertImgPBM(callback) {
+
+      var bmp = image.path + '.bmp';
+      var pbm = image.path + '.pbm';
+      var child = exec('convert ' + pbm + ' ' + bmp,
+        function (error, stdout, stderr) {
+
+          if (error) {
+            callback(error);
+          }
+          callback(null);
+        });
+    },
+    function processImg(callback) {
+      var svg = image.path + '.svg';
+      var pbm = image.path + '.pbm';
+      var options = ["--svg"];
+
+      if (jsonparam) {
+        Object.keys(jsonparam).forEach(function (i) {
+          if (paramsTypes.indexOf(i) !== -1) {
+            if (!!jsonparam[i] && jsonparam[i] !== true) {
+              options.push('--' + i);
+              options.push(jsonparam[i]);
+            } else if (jsonparam[i] == true) {
+
+              options.push('--' + i);
+
+            }
+          }
+        });
+      };
+
+      options = options.concat([pbm, '-o', svg]);
+
+      var potrace = spawn('potrace', options);
+      console.log('potrace', options);
+      potrace.on('error', function (error) {
+        callback(error);
+      });
+      potrace.on('close', function (code) {
+        callback(null);
+      });
+
+    }
+  ],
+    function (err) {
       if (err) {
         console.log(err)
         res.send({
@@ -160,6 +162,6 @@ app.post('/api/photo', multipartMiddleware, function(req, res) {
 
 
 /*Run the server.*/
-app.listen(3000, function() {
+app.listen(3000, function () {
   console.log("Working on port 3000");
 });

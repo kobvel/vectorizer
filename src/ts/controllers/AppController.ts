@@ -25,7 +25,7 @@ declare var VK:any;
     { icon: 'icon-docs', text: 'Docs' },
     { icon: 'icon-comment', text: 'Comment'}      
     ];
-
+ 
     angular.extend(self, {
       stage: Stage,
       loader: Loader,

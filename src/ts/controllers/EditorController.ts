@@ -121,7 +121,7 @@
             canvas.bind('mouseleave', leaveHandler);
 
         }                     
-
+      
         function stopEdit() {
             console.log(counter1, counter2);
             canvas.unbind();

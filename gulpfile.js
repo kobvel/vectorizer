@@ -1,3 +1,4 @@
+
 'use strict';
 var path = require('path');
 var exec = require('child_process').exec;
@@ -35,7 +36,7 @@ var vendors = {
     './vendors/color-thief/src/color-thief.js',
     './vendors/api-vendors/vk.js'
   ]
-}
+};
 
 gulp.task('gen-ts-refs', function() {
   var target = gulp.src(config.appTypeScriptReferences);
