@@ -80,7 +80,21 @@
 									<input ng-model="edit.checkedColor" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="black"> black
 								</label>
 								<button ng-click="app.processDataUrl(edit.getCanvas())"class="btn btn-primary btn-block">Process</button>
+								<section id="set-3">
+								<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
+									<a class="hi-icon icon-fb">Fb</a>
+									<a class="hi-icon icon-vk" ng-click="share.shareVk()">Vk</a>
+									<a class="hi-icon icon-twitter">Twitter</a>
+									<a class="hi-icon icon-pint">Pint</a>
+								</div>
+								<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
+									<a class="hi-icon icon-insta">Insta</a>
+									<a class="hi-icon icon-git">Git</a>
+									<a class="hi-icon icon-google">Google</a>
+									<a class="hi-icon icon-trello">Trello</a>
+								</div>
 
+							</section>
 							</div>
 							<div id="paramscontainer" class="container-fluid" ng-show="app.currentTab2.text=='Params'">
 								<div class="col-md-6">
