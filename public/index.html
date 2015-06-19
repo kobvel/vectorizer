@@ -19,18 +19,29 @@
 		<div class="container-fluid">
 			<div class="row-fluid ">
 				<div class="col-md-8">	
+					<div class="refresh-btn">
+						<section>
+							<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
+								<a class="hi-icon icon-refresh" ng-click="app.process()"></a>
+							</div>
+						</section>
+					</div>
 					<div class="topmenubar">
+
 						<div id="inputImage">
 							<input  type="file" ng-model="app.file" accept="image/*"  file-input file-changed="app.dataChanged()">
 						</div>           		
 
-
+						
 						<div id="visibleLayerRadio" class="btn-group">
-							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'SVG'">SVG</label>
-							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'" >IMG</label>
-							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'ALL'" >ALL</label>
-							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'PBM'" >PBM</label>
+							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()"  btn-radio="'SVG'">SVG</label>
+							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'IMG'">IMG</label>
+							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()"  btn-radio="'ALL'">ALL</label>
+							<label class="btn btn-success" ng-model="app.visibleLayer" ng-change="app.changeVisibleLayer()" btn-radio="'PBM'">PBM</label>
 						</div>	
+
+					
+						
 					</div>
 					<konva id="konvastage" stage="app.stage" color-picker></konva>
 					<div id="container"></div>			
@@ -48,8 +59,9 @@
 								<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
 									<a class="hi-icon icon-fb">Fb</a>
 									<a class="hi-icon icon-vk" ng-click="share.shareVk()">Vk</a>
-									<a class="hi-icon icon-twitter">Twitter</a>
-									<a class="hi-icon icon-pint">Pint</a>
+									<a class="hi-icon icon-pint">Fb</a>
+									<a class="hi-icon icon-twitter" ng-click="share.shareVk()">Vk</a>
+									
 								</div>
 								<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
 									<a class="hi-icon icon-insta">Insta</a>
@@ -64,37 +76,27 @@
 						
 
 						<form >	
-							<div class="diveditor" ng-show="app.currentTab2.text=='Edit'" ng-controller="EditorController as edit">
-								<button ng-click="edit.editImage($event)" class="btn btn-primary">Pencil    edit</button>
-								<button ng-click="edit.stopEdit($event)" class="btn btn-primary">Stop Drawing</button>
-								<button ng-click="edit.clearArea($event)" class="btn btn-primary">Clear Area</button>
-								<button ng-click="edit.cUndo($event)" class="btn btn-primary">Undo</button>
-								<button ng-click="edit.cRedo($event)" class="btn btn-primary">Redo</button>
-								<button ng-click="edit.fillArea(edit.checkedColor)" class="btn btn-primary">Fill Area</button>
-								<button ng-click="edit.zoomArea()" class="btn btn-primary">ZOOM</button>
-								
-								<label class="radio-inline">
-									<input ng-model="edit.checkedColor" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="white"> white
-								</label>
-								<label class="radio-inline">
-									<input ng-model="edit.checkedColor" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="black"> black
-								</label>
-								<button ng-click="app.processDataUrl(edit.getCanvas())"class="btn btn-primary btn-block">Process</button>
-								<section id="set-3">
-								<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
-									<a class="hi-icon icon-fb">Fb</a>
-									<a class="hi-icon icon-vk" ng-click="share.shareVk()">Vk</a>
-									<a class="hi-icon icon-twitter">Twitter</a>
-									<a class="hi-icon icon-pint">Pint</a>
-								</div>
-								<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
-									<a class="hi-icon icon-insta">Insta</a>
-									<a class="hi-icon icon-git">Git</a>
-									<a class="hi-icon icon-google">Google</a>
-									<a class="hi-icon icon-trello">Trello</a>
-								</div>
+							<div class="diveditor drawsection" ng-show="app.currentTab2.text=='Edit'" ng-controller="EditorController as edit">						
+								<section id="set-2">
+									<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
+										<a class="hi-icon icon-draw" ng-click="edit.editImage($event)"></a>
+										<a class="hi-icon icon-fill-black" ng-click="edit.fillArea('black')"></a>										
+									</div>
+									<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
+										<a class="hi-icon icon-fill-white" ng-click="edit.fillArea('white')"></a>
+										<a class="hi-icon icon-stop" ng-click="edit.stopEdit($event)"></a>
+									</div>
+									<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
+										<a class="hi-icon icon-clear" ng-click="edit.clearArea($event)"></a>
+										<a class="hi-icon icon-zoom" ng-click="edit.zoomArea()" ></a>
+									</div>
+									<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
+										
+										<a class="hi-icon icon-undo" ng-click="edit.cUndo($event)" ></a>
+										<a class="hi-icon icon-redo" ng-click="edit.cRedo($event)"></a>
+									</div>
 
-							</section>
+								</section>
 							</div>
 							<div id="paramscontainer" class="container-fluid" ng-show="app.currentTab2.text=='Params'">
 								<div class="col-md-6">
@@ -127,7 +129,6 @@
 											</div> 
 										</div>
 									</div>
-
 
 
 									<div>			
@@ -164,9 +165,8 @@
 											</div>									
 										</div>
 									</div>
-								</div>	
-
-								<button type="button" ng-click="app.processExistingImage()" class="btn btn-success">Success</button>	
+								</div>									
+								
 							</div>	
 						</form>
 						<ul class="cbp-vimenu" >
@@ -174,7 +174,7 @@
 								<a class="{{tab.icon}}" ng-click="app.currentTab1 = tab">{{tab.text}}</a>
 							</li>
 							<li ng-repeat="tab in app.tabs2" ng-class="{'cbp-vicurrent': app.currentTab2 == tab}">
-								<a class="{{tab.icon}}" ng-click="app.currentTab2 = tab">{{tab.text}}</a>
+								<a class="{{tab.icon}}" ng-click="app.currentTab2 = tab; app.checkTab()">{{tab.text}}</a>
 							</li>
 						</ul>
 

@@ -7,10 +7,11 @@ declare var VK:any;
   .module('Vectorizer.controllers')
   .controller('AppController', AppController);
 
-  AppController.$inject = ['Uploader', 'Loader', 'Stage', 'BroadcastService', 'Params'];
+  AppController.$inject = ['Uploader', 'Loader', 'Stage', 'BroadcastService', 'Params', '$scope'];
 
-  function AppController(Uploader, Loader, Stage, BroadcastService, Params) {
+  function AppController(Uploader, Loader, Stage, BroadcastService, Params, $scope) {
     var self = this;
+
     var tabs1 = [
     { icon: 'icon-save', text: 'Save' },
     { icon: 'icon-share', text: 'Share' }
@@ -23,7 +24,7 @@ declare var VK:any;
     { icon: 'icon-user', text: 'User' },
     { icon: 'icon-info', text: 'Info' },
     { icon: 'icon-docs', text: 'Docs' },
-    { icon: 'icon-comment', text: 'Comment'}      
+    { icon: 'icon-comment', text: 'Comment'}    
     ];
  
     angular.extend(self, {
@@ -34,10 +35,10 @@ declare var VK:any;
       svgUrl: null,
       saveImg: saveImg,  
       dataChanged: dataChanged,
-      processExistingImage: processExistingImage,
       changeVisibleLayer: changeVisibleLayer,
-      changeToggleCollapse: changeToggleCollapse,
-      processDataUrl: processDataUrl,
+      changeToggleCollapse: changeToggleCollapse,      
+      process: process,
+      checkTab: checkTab,
       visibleLayer: 'SVG',
       isCollapsed: true,
       Params: Params,
@@ -47,10 +48,35 @@ declare var VK:any;
       currentTab2: tabs2[0]
       });
 
-    
+    console.log($scope);
+    $scope.$watch(self.currentTab2, function() {
+      if (self.currentTab2 == 'Edit') {
+        console.log('go');
+        self.stage.pbmLayer.visible(true);
+        self.stage.svgLayer.visible(false);
+        self.stage.imageLayer.visible(false);
+      }
+      else{
+        console.log(self.currentTab2);
+      }
+    });
+
+    function checkTab() {
+      
+      if (self.file) {
+        if (self.currentTab2.text === 'Edit') { 
+          self.visibleLayer = 'PBM';       
+          self.stage.pbmLayer.visible(true);
+          self.stage.svgLayer.visible(false);
+          self.stage.imageLayer.visible(false);
+        }
+      }
+    }
+
     function changeToggleCollapse() {
       self.isCollapsed = !self.isCollapsed;
     }
+
     function saveImg(){
       
       var link = document.createElement('a');
@@ -67,16 +93,19 @@ declare var VK:any;
           self.stage.svgLayer.visible(true);
           self.stage.pbmLayer.visible(false);
           self.stage.imageLayer.visible(false);
+          
           break;
           case 'IMG':
           self.stage.svgLayer.visible(false);
           self.stage.imageLayer.visible(true);
           self.stage.pbmLayer.visible(false);
+       
           break;
           case 'PBM':
           self.stage.pbmLayer.visible(true);
           self.stage.svgLayer.visible(false);
           self.stage.imageLayer.visible(false);
+          
           break;
           case 'ALL':
           self.stage.pbmLayer.visible(false);
@@ -103,7 +132,15 @@ declare var VK:any;
           console.log(reason);
           });
     };
-
+    function process() {
+      if(self.currentTab2 === 'Edit'){
+      processExistingImage();
+      } else{
+         var canvas = Stage.element.find('canvas:nth-child(3)');
+         var data = canvas[0].toDataURL();
+      processDataUrl(data);
+      }
+    }
     function processExistingImage() {
       var data = new FormData;                  
       data.append('imagesrc', Stage.imagePath);
